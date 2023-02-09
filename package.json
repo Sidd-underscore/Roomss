@@ -6,23 +6,30 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.1.1",
+    "@emoji-mart/react": "^1.1.1",
+    "@firebase/app-check": "^0.6.0",
+    "@firebase/firestore": "^3.8.1",
+    "@headlessui/react": "^1.7.7",
+    "emoji-mart": "^5.4.0",
+    "firebase": "^9.15.0",
     "next": "latest",
+    "next-transpile-modules": "^10.0.0",
+    "nprogress": "^0.2.0",
+    "prettier": "^2.8.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-dropzone": "^14.2.3",
+    "sharp": "^0.31.3",
+    "use-file-picker": "^1.5.2",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/node": "18.11.3",
-    "@types/react": "18.0.21",
-    "@types/react-dom": "18.0.6",
-    "@typescript-eslint/eslint-plugin": "^5.46.1",
-    "autoprefixer": "^10.4.12",
-    "eslint": "^8.29.0",
-    "eslint-config-standard-with-typescript": "^24.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.6.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "postcss": "^8.4.18",
-    "tailwindcss": "^3.2.1",
+    "@types/react": "18.0.26",
+    "autoprefixer": "^10.4.13",
+    "eslint": "^8.30.0",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4",
     "typescript": "^4.9.4"
   }
 }
