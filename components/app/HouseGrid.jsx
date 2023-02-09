@@ -206,7 +206,7 @@ const HouseGrid = (uid) => {
 																	) : (
 																		<FileInput maxFiles={1} setFile={setHouseBanner} accepts={{ 'image/*': ['.jpeg', '.png', '.wepb', '.gif'] }} showText={false} className="rounded-full w-32 h-32" />
 																	)}
-																	<p className="text-sm mt-4 text-gray-400">Banner image will crop automatically to maintain aspect ratio</p>
+																	<p className="text-sm mt-4 text-gray-400">Banner image will crop automatically to maintain aspect ratio and will be blurred as a ackground of hour house. We reccomend gradients or images with repeating patterns.</p>
 
 																</div>
 															</div>
