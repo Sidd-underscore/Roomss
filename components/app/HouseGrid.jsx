@@ -12,6 +12,7 @@ import MainButton from '../MainButton'
 import { arrayUnion } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid';
 import Link from 'next/link'
+import Image from 'next/image'
 
 const HouseGrid = (uid) => {
 	const [loading, setLoading] = useState(true)
@@ -89,8 +90,8 @@ const HouseGrid = (uid) => {
 								houses.map((house, index) => (
 									<Link href={`/app/houses/${house.id}`}>
 										<div key={house.data.keyForReact} className="transition duration-200 ease cursor-pointer hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg select-none bg-dark-lighter transition duration-200 ease text-left rounded-md">
-											<img src={house.data.banner} className="object-cover bg-dark-darker h-36 w-full rounded-md rounded-br-none rounded-bl-none relative block bg-center bg-cover" />
-											<img src={house.data.avatar} className="logo -mt-8 mb-1 left-4 top-0 relative rounded-full w-20 h-20 bg-dark-darker-low-opacity backdrop-blur-sm" />
+											<Image priority width={288} height={144} alt="House banner" src={house.data.banner} className="object-cover bg-dark-darker h-36 w-full rounded-md rounded-br-none rounded-bl-none relative block bg-center bg-cover" />
+											<Image priority width={80} height={80} alt="House avatar" src={house.data.avatar} className="logo -mt-8 mb-1 left-4 top-0 relative rounded-full w-20 h-20 bg-dark-darker-low-opacity backdrop-blur-sm" />
 											<div className="content w-auto p-4">
 												<div className="text-xl mb-2 font-bold rounded-lg w-auto break-words" title={house.data.name}>
 													{house.data.name}
