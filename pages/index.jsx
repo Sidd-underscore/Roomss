@@ -120,7 +120,7 @@ export default function Home() {
 			</div>
 			<div id="roomss-is-better" className="mx-auto max-w-7xl px-6 mt-24 mb-10 lg:px-8">
 				<div className="sm:text-center">
-					<h2 className="text-lg font-semibold leading-8 text-primary-low-opacity">it's true</h2>
+					<h2 className="text-lg font-semibold leading-8 text-primary-low-opacity">it&apos;s true</h2>
 					<div className="text-4xl font-bold tracking-tight text-primary sm:text-4xl">A better way to collaborate</div>
 					<div className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white">
 						{features.length} undeniable reasons Roomss is better than the service you use
@@ -145,7 +145,7 @@ export default function Home() {
 			</div>
 			<div id="faq" className="mx-auto max-w-7xl px-6 mt-40 mb-10 lg:px-8">
 				<div className="sm:text-center">
-					<h2 className="text-lg font-semibold leading-8 text-primary-low-opacity">a good ol' Q&A</h2>
+					<h2 className="text-lg font-semibold leading-8 text-primary-low-opacity">a good ol&apos; Q&A</h2>
 					<div className="text-4xl font-bold tracking-tight text-primary sm:text-4xl">Frequently Asked Questions</div>
 					<div className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white">
 						Quick answers to frequent questions to speed up your day
@@ -279,8 +279,8 @@ export default function Home() {
 					<div className="grid grid-cols-4 p-4 text-base font-medium gap-x-16 bg-gray-800">
 						<div className="flex items-center"></div>
 						<div>Roomss</div>
-						<div>Google Worskpace (<a className="font-medium underline hover:no-underline" href="https://workspace.google.com/pricing.html" target="_blank">Business Standard</a>)</div>
-						<div>Microsoft 365 (<a className="font-medium underline hover:no-underline" href="https://www.microsoft.com/en-us/microsoft-365/buy/compare-all-microsoft-365-products?&activetab=tab:primaryr1" target="_blank">Microsoft 365 Personal</a>)</div>
+						<div>Google Worskpace (<a className="font-medium underline hover:no-underline" rel="noreferrer" href="https://workspace.google.com/pricing.html" target="_blank">Business Standard</a>)</div>
+						<div>Microsoft 365 (<a className="font-medium underline hover:no-underline" rel="noreferrer" href="https://www.microsoft.com/en-us/microsoft-365/buy/compare-all-microsoft-365-products?&activetab=tab:primaryr1" target="_blank">Microsoft 365 Personal</a>)</div>
 					</div>
 					<div className="grid grid-cols-4 px-4 py-5 text-sm text-gray-700 border-b border-gray-200 gap-x-16 dark:border-gray-700">
 						<div className="text-gray-400">Unlimited Storage</div>

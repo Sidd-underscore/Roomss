@@ -5,7 +5,7 @@ import UserDropdown from "../../../components/app/UserDropdown";
 import { app, getUser, getUserInfo, getHouseInfo } from "../../../firebase/main";
 import Illustrations from "../../../components/utility/Illustrations"
 
-const housePage = () => {
+const HousePage = () => {
 	const router = useRouter()
 	const { id } = router.query
 	const [house, setHouse] = useState()
@@ -133,4 +133,4 @@ const housePage = () => {
 	)
 }
 
-export default housePage
+export default HousePage

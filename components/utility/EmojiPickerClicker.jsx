@@ -11,8 +11,9 @@ const EmojiPicker = ({ eleHeight, onTheEmojiClick, selectedEmoji, instance }) =>
 	const [showPicker, setShowPicker] = useState(false)
 	const [dialogStyles, setDialogStyles] = useState({});
 
-	let mousePos;
+	
 	useEffect(() => {
+		let mousePos;
 		const handleMouseClick = () => {
 			var rect = instance.current.getBoundingClientRect();
 			var height = rect.y - eleHeight
@@ -33,7 +34,7 @@ const EmojiPicker = ({ eleHeight, onTheEmojiClick, selectedEmoji, instance }) =>
 
 		instance.current.addEventListener('click', handleMouseClick);
 
-	}, []);
+	}, [eleHeight, instance]);
 
 	const customCategoryIcons = {
 		frequent: {

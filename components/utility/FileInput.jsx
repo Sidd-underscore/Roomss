@@ -40,7 +40,7 @@ const FileInput = ({ setFile, accepts, className, showText }) => {
 				setFile({blob: blob, link: URL.createObjectURL(blob)});
 			}
 		})
-	}, [])
+	}, [setFile])
 
 	return (
 		<>

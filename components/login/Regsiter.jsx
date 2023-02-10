@@ -1,5 +1,6 @@
 import Button from "../Button"
 import Link from "next/link"
+import Image from "next/image"
 
 const Registerform = () => {
 	return (
@@ -63,12 +64,12 @@ const Registerform = () => {
 				</span>
 				<div className="space-y-4 md:ml-8 md:grid md:content-center border-0 border-none">
 					<Button istext="true" isfull="true" id="google-register">
-						<img className="h-8 mr-5" src="/img/google.png" />
+						<Image height={32} width={32} alt="" className="h-8 mr-5" src="/img/google.png" />
 						Sign up with Google
 					</Button>
 					<br />
 					<Button istext="true" isfull="true" id="github-register">
-						<img className="h-8 mr-5" src="/img/github.png" />
+						<Image height={32} width={32} alt="" className="h-8 mr-5" src="/img/github.png" />
 						<span>Sign up with GitHub</span>
 					</Button>
 				</div>
