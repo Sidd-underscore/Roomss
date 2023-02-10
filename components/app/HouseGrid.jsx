@@ -12,6 +12,7 @@ import MainButton from '../MainButton'
 import { arrayUnion } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid';
 import Link from 'next/link'
+import Image from 'next/image'
 
 const HouseGrid = (uid) => {
 	const [loading, setLoading] = useState(true)
@@ -87,10 +88,11 @@ const HouseGrid = (uid) => {
 						<div className="card-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8" >
 							{
 								houses.map((house, index) => (
+									<div key={house.data.keyForReact} >
 									<Link href={`/app/houses/${house.id}`}>
-										<div key={house.data.keyForReact} className="transition duration-200 ease cursor-pointer hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg select-none bg-dark-lighter transition duration-200 ease text-left rounded-md">
-											<img src={house.data.banner} className="object-cover bg-dark-darker h-36 w-full rounded-md rounded-br-none rounded-bl-none relative block bg-center bg-cover" />
-											<img src={house.data.avatar} className="logo -mt-8 mb-1 left-4 top-0 relative rounded-full w-20 h-20 bg-dark-darker-low-opacity backdrop-blur-sm" />
+										<div className="transition duration-200 ease cursor-pointer hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg select-none bg-dark-lighter transition duration-200 ease text-left rounded-md">
+											<Image priority width={288} height={144} alt="House banner" src={house.data.banner} className="object-cover bg-dark-darker h-36 w-full rounded-md rounded-br-none rounded-bl-none relative block bg-center bg-cover" />
+											<Image priority width={80} height={80} alt="House avatar" src={house.data.avatar} className="logo -mt-8 mb-1 left-4 top-0 relative rounded-full w-20 h-20 bg-dark-darker-low-opacity backdrop-blur-sm" />
 											<div className="content w-auto p-4">
 												<div className="text-xl mb-2 font-bold rounded-lg w-auto break-words" title={house.data.name}>
 													{house.data.name}
@@ -101,6 +103,7 @@ const HouseGrid = (uid) => {
 											</div>
 										</div>
 									</Link>
+								</div>
 								))
 							}
 							<div onClick={() => setShowCreateHouseModal(true)} className="cursor-pointer select-none bg-dark-darker transition duration-200 ease hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg  text-center bg-center bg-splash-1 bg-no-repeat bg-cover rounded-md flex items-center justify-center">
@@ -180,7 +183,7 @@ const HouseGrid = (uid) => {
 																		<div className="flex group relative items-center justify-center w-full">
 																			<div className={`flex flex-col items-center justify-center w-full  text-center cursor-pointer `}>
 																				<div className="flex flex-col items-center justify-center border-2 rounded-full hover:bg-dark border-gray-600 hover:border-gray-500">
-																					<img src={houseAvatar.link} className={`w-32 h-32 aspect-square rounded-full text-gray-400`} />
+																					<Image src={houseAvatar.link} alt="The preview for your house avatar" className={`w-32 h-32 aspect-square rounded-full text-gray-400`} />
 																				</div>
 																				<div onClick={() => setHouseAvatar()} className="absolute bottom-0 shadow-xl md:right-[25%] sm:right-[40%] right-12 bg-primary p-2 rounded-full"><Icons icon="x-mark" /></div>
 																			</div>
@@ -198,7 +201,7 @@ const HouseGrid = (uid) => {
 																		<div className="flex group items-center justify-center w-full">
 																			<div className={`flex relative flex-col items-center justify-center w-full  text-center cursor-pointer `}>
 																				<div className="flex flex-col items-center justify-center rounded-md border-2 hover:bg-dark border-gray-600 hover:border-gray-500">
-																					<img src={houseBanner.link} className={`w-64 h-32 rounded-md object-cover text-gray-400`} />
+																					<Image alt="The preview for your house banner" src={houseBanner.link} className={`w-64 h-32 rounded-md object-cover text-gray-400`} />
 																				</div>
 																				<div onClick={() => setHouseBanner()} className="absolute -bottom-2 shadow-xl md:right-0 -right-2 sm:right-36 bg-primary p-2 rounded-full"><Icons icon="x-mark" /></div>
 																			</div>
@@ -206,7 +209,7 @@ const HouseGrid = (uid) => {
 																	) : (
 																		<FileInput maxFiles={1} setFile={setHouseBanner} accepts={{ 'image/*': ['.jpeg', '.png', '.wepb', '.gif'] }} showText={false} className="rounded-full w-32 h-32" />
 																	)}
-																	<p className="text-sm mt-4 text-gray-400">Banner image will crop automatically to maintain aspect ratio</p>
+																	<p className="text-sm mt-4 text-gray-400">Banner image will crop automatically to maintain aspect ratio and will be blurred as a ackground of hour house. We reccomend gradients or images with repeating patterns.</p>
 
 																</div>
 															</div>
@@ -215,8 +218,8 @@ const HouseGrid = (uid) => {
 														<>
 															<div className="text-base mt-6 md:mt-0 mb-4 text-center font-bold">Preview</div>
 															<div className="card house select-none bg-dark-lighter transition duration-200 ease text-left rounded-md">
-																<img src={houseBanner.link} className="object-cover bg-dark-darker h-36 w-full rounded-md rounded-br-none rounded-bl-none relative block bg-center bg-cover" />
-																<img src={houseAvatar.link} className="logo -mt-8 mb-1 left-4 top-0 relative rounded-full w-20 h-20 bg-dark-darker-low-opacity backdrop-blur-sm" />
+																<Image alt="Your house banner" src={houseBanner.link} className="object-cover bg-dark-darker h-36 w-full rounded-md rounded-br-none rounded-bl-none relative block bg-center bg-cover" />
+																<Image alt="Your house avatar" src={houseAvatar.link} className="logo -mt-8 mb-1 left-4 top-0 relative rounded-full w-20 h-20 bg-dark-darker-low-opacity backdrop-blur-sm" />
 																<div className="content p-4">
 																	<div className="text-xl mb-2 font-bold rounded-lg w-auto truncate">
 																		{houseName}

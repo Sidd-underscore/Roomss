@@ -4,6 +4,7 @@ import { useState, useEffect, } from 'react';
 import NProgress from 'nprogress'
 import { Analytics } from '@vercel/analytics/react';
 
+
 function MyApp({ Component, pageProps }) {
 	const [isLoading, setIsLoading] = useState(false);
 	NProgress.configure({ showSpinner: false });
@@ -43,7 +44,7 @@ function MyApp({ Component, pageProps }) {
 		};
 		registerServiceWorker();
 
-	}, [Router])
+	}, [])
 
 	return (
 		<>
