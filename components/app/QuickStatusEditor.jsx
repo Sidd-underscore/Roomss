@@ -8,7 +8,6 @@ import ModalTransitionAsChild from '../transitions/childs/ModalTransitionAsChild
 import Emoji from '../utility/Emoji'
 import { getUserInfo, updateUserInfo } from "../../firebase/main"
 import Icons from "../utility/Icons"
-import { arrayUnion } from "@firebase/firestore"
 
 const QuickStatusEditor = ({ show, onClose, uid }) => {
 	const [quickStatusSelectedEmoji, setQuickStatusSelectedEmoji] = useState();
