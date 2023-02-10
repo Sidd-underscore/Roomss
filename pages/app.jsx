@@ -10,18 +10,21 @@ const App = () => {
 	const router = useRouter()
 	const [name, setName] = useState('')
 	const [userData, setUserData] = useState({})
-	let timeOfDay;
+	const [timeOfDay, setTimeOfDay] = useState("a mysterious time");
+	
+	useEffect(() => {
+		var date = new Date();
+		var hours = date.getHours();
 
-	var date = new Date();
-	var hours = date.getHours();
+		if (hours < 12) {
+			setTimeOfDay("morning");
+		} else if (hours < 18) {
+			setTimeOfDay("afternoon");
+		} else {
+			setTimeOfDay("evening");
+		}
 
-	if (hours < 12) {
-		timeOfDay = "morning";
-	} else if (hours < 18) {
-		timeOfDay = "afternoon";
-	} else {
-		timeOfDay = "evening";
-	}
+	}, [setTimeOfDay])
 
 	if (app) {
 		getUser().then((user) => {

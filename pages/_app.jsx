@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
 			if ('serviceWorker' in navigator) {
 				try {
 					const registration = await navigator.serviceWorker.register(
-						'sw.js',
+						'/sw.js',
 						{
 							scope: '/',
 						}
