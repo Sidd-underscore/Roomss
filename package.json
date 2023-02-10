@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+	  "lint": "next lint"
   },
   "license": "MIT",
   "dependencies": {
@@ -12,6 +13,7 @@
     "@firebase/app-check": "^0.6.0",
     "@firebase/firestore": "^3.8.1",
     "@headlessui/react": "^1.7.7",
+    "@next/eslint-plugin-next": "^13.1.6",
     "@vercel/analytics": "^0.1.8",
     "emoji-mart": "^5.4.0",
     "firebase": "^9.15.0",
