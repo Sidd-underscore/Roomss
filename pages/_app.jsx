@@ -2,6 +2,7 @@ import '../public/css/styles.css'
 import Router from 'next/router'
 import { useState, useEffect, } from 'react';
 import NProgress from 'nprogress'
+import { Analytics } from '@vercel/analytics/react';
 
 
 function MyApp({ Component, pageProps }) {
@@ -48,6 +49,7 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<>
 			<Component className="bg-dark" {...pageProps} />
+			<Analytics />
 		</>
 	)
 }
