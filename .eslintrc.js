@@ -3,7 +3,7 @@ module.exports = {
 		browser: true,
 		es2021: true
 	},
-	extends: 'plugin:@next/next/recommended',
+	extends: '',
 	overrides: [
 	],
 	parserOptions: {
