@@ -37,3 +37,4 @@ next-env.d.ts
 
 #el locko
 package-lock.json
+yarn.lock
