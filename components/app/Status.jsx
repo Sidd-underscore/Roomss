@@ -30,7 +30,7 @@ const Status = ({ show, onClose, uid, normalClose }) => {
 
 
 	var quickStatuses = [];
-	if (uid != 'loading') {
+	if (uid && uid.uid != '') {
 		if (getUserInfo) {
 			getUserInfo(uid).then((doc) => {
 				if (doc.data().quickStatuses) {
@@ -115,7 +115,7 @@ const Status = ({ show, onClose, uid, normalClose }) => {
 																<button key={JSON.stringify(status)} onClick={(e) => { setSelectedEmoji(status.id); setStatusText(status.text) }} type="button" className="h-10 opacity-75 hover:opacity-100 ring-1 ring-white ring-opacity-5 bg-dark rounded-md text-sm px-5 py-2.5 text-center mr-2 mt-1.5 inline-flex items-center">
 																	{status.id && <Emoji id={status.id} size="16" />}
 																	{status.text && <span className={`truncate ${status.id && "ml-3"} h-5`}>{status.text}</span>}
-																	
+
 																</button>
 															))
 														}

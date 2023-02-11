@@ -1,7 +1,7 @@
 import Loader from '../utility/Loader'
 import BlurredModalBackground from '../utility/BlurredModalBackground'
 import ModalTransitionAsChild from '../transitions/childs/ModalTransitionAsChild'
-import { useState, Fragment, useRef } from 'react'
+import { useState, Fragment, useRef, useEffect } from 'react'
 import { app, getUserInfo, updateUserInfo, createHouse, uploadFile, getHouseInfo } from "../../firebase/main"
 import Illustrations from "../utility/Illustrations"
 import { Dialog, Transition, Popover, Menu } from '@headlessui/react'
@@ -26,29 +26,28 @@ const HouseGrid = (uid) => {
 	const [houseBanner, setHouseBanner] = useState()
 	const [houses, setHouses] = useState([])
 
-	if (app) {
+	useEffect(() => {
 		var theyHouses = [];
-
-		getUserInfo(uid.uid).then((doc) => {
-			if (doc.data()) {
-
-				if (doc.data().housesJoined && doc.data().housesJoined.length != 0) {
-					doc.data().housesJoined.forEach((house) => {
-						getHouseInfo(house, uid.uid).then((thehousedata) => {
-							theyHouses.push({ data: thehousedata.data().data, id: house })
-							setHouses(theyHouses)
+		if (uid && uid.uid != '') {
+			getUserInfo(uid.uid).then((doc) => {
+				if (doc.data()) {
+					if (doc.data().housesJoined && doc.data().housesJoined.length != 0) {
+						doc.data().housesJoined.forEach((house) => {
+							getHouseInfo(house, uid.uid).then((thehousedata) => {
+								theyHouses.push({ data: thehousedata.data().data, id: house })
+								setHouses(theyHouses)
+							})
 						})
-					})
-					setHasJoinedHouses(true)
-					setLoading(false)
-				} else {
-					setHasJoinedHouses(false)
-					setLoading(false)
+						setHasJoinedHouses(true)
+						setLoading(false)
+					} else {
+						setHasJoinedHouses(false)
+						setLoading(false)
+					}
 				}
-			}
-		});
-
-	}
+			});
+		}
+	}, [uid]);
 
 	const makeTheHouse = () => {
 		setIsHouseCreationLoading(true)
@@ -89,21 +88,21 @@ const HouseGrid = (uid) => {
 							{
 								houses.map((house, index) => (
 									<div key={house.data.keyForReact} >
-									<Link href={`/app/houses/${house.id}`}>
-										<div className="transition duration-200 ease cursor-pointer hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg select-none bg-dark-lighter transition duration-200 ease text-left rounded-md">
-											<Image priority width={288} height={144} alt="House banner" src={house.data.banner} className="object-cover bg-dark-darker h-36 w-full rounded-md rounded-br-none rounded-bl-none relative block bg-center bg-cover" />
-											<Image priority width={80} height={80} alt="House avatar" src={house.data.avatar} className="logo -mt-8 mb-1 left-4 top-0 relative rounded-full w-20 h-20 bg-dark-darker-low-opacity backdrop-blur-sm" />
-											<div className="content w-auto p-4">
-												<div className="text-xl mb-2 font-bold rounded-lg w-auto break-words" title={house.data.name}>
-													{house.data.name}
+										<Link href={`/app/houses/${house.id}`}>
+											<div className="transition duration-200 ease cursor-pointer hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg select-none bg-dark-lighter transition duration-200 ease text-left rounded-md">
+												<Image priority width={288} height={144} alt="House banner" src={house.data.banner} className="object-cover bg-dark-darker h-36 w-full rounded-md rounded-br-none rounded-bl-none relative block bg-center bg-cover" />
+												<Image priority width={80} height={80} alt="House avatar" src={house.data.avatar} className="logo -mt-8 mb-1 left-4 top-0 relative rounded-full w-20 h-20 bg-dark-darker-low-opacity backdrop-blur-sm" />
+												<div className="content w-auto p-4">
+													<div className="text-xl mb-2 font-bold rounded-lg w-auto break-words" title={house.data.name}>
+														{house.data.name}
+													</div>
+													<p className="break-words" title={house.data.description}>
+														{house.data.description}
+													</p>
 												</div>
-												<p className="break-words" title={house.data.description}>
-													{house.data.description}
-												</p>
 											</div>
-										</div>
-									</Link>
-								</div>
+										</Link>
+									</div>
 								))
 							}
 							<div onClick={() => setShowCreateHouseModal(true)} className="cursor-pointer select-none bg-dark-darker transition duration-200 ease hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg  text-center bg-center bg-splash-1 bg-no-repeat bg-cover rounded-md flex items-center justify-center">

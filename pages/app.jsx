@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { app, getUser, getUserInfo } from "../firebase/main";
 
 const App = () => {
-	const [userUID, setUserUID] = useState('loading');
+	const [userUID, setUserUID] = useState();
 	const router = useRouter()
 	const [name, setName] = useState('')
 	const [userData, setUserData] = useState({})
@@ -30,12 +30,11 @@ const App = () => {
 		getUser().then((user) => {
 			if (user) {
 				setUserUID(user.uid);
-				if (userUID != 'loading') {
-					getUserInfo(userUID).then(async (dadocument) => {
+					getUserInfo(user.uid).then(async (dadocument) => {
 						setUserData(dadocument.data())
 						setName(dadocument.data().name)
 					});
-				}
+				
 
 			} else {
 				router.push('/login', undefined, { shallow: true })
