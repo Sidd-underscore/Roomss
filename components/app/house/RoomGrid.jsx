@@ -46,7 +46,7 @@ const RoomGrid = ({ uid, houseID }) => {
 				}
 			});
 		}
-	}, [uid]);
+	}, [uid, houseID]);
 
 	const makeTheHouse = () => {
 		setIsHouseCreationLoading(true)
