@@ -113,7 +113,7 @@ if (typeof window !== "undefined") {
 		return new Promise((resolve, reject) => {
 			const unsub = onSnapshot(doc(Db, "houses", `${id}`), (doc) => {
 				if (doc) {
-					if (doc.data().data.users.includes(uid)) {
+					if (doc.data() && doc.data().data.users.includes(uid)) {
 						resolve(doc)
 					} else {
 						reject('>:(')

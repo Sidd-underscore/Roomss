@@ -42,7 +42,7 @@ const QuickStatusEditor = ({ show, onClose, uid }) => {
 	}
 
 	var quickStatuses = [];
-	if (uid != 'loading') {
+	if (uid && uid.uid != '') {
 		if (getUserInfo) {
 			getUserInfo(uid).then((doc) => {
 
