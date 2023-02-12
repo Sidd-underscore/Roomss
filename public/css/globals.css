@@ -124,3 +124,11 @@ em-emoji * {
         transform: rotate(360deg)
     }
 }
+
+.text-shadow-md {
+	text-shadow: #000 1px 0 26px;
+}
+
+body .drop-shadow-md {
+	filter: drop-shadow(3px 3px 26px rgb(0 0 0 / 0.4));
+}
