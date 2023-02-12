@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import Head from "next/head";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import UserDropdown from "../../../components/app/UserDropdown";
 import { app, getUser, getUserInfo, getHouseInfo } from "../../../firebase/main";
@@ -13,20 +13,20 @@ const RoomPage = () => {
 	const { id } = router.query
 	const [house, setHouse] = useState()
 	const [userUID, setUserUID] = useState();
-	const [userData, setUserData] = useState({})
-
-	if (app) {
+	
+	useEffect(() => {
 		getUser().then((user) => {
 			if (user && user.uid) {
 				setUserUID(user.uid);
-				getUserInfo(user.uid).then(async (dadocument) => {
-					setUserData(dadocument.data())
-					if (dadocument.data().housesJoined && dadocument.data().housesJoined.includes(id)) {
-						getHouseInfo(id, user.uid).then((thehousedata) => {
-							setHouse(thehousedata.data())
-						})
-					} else {
-						router.push('/app', undefined, { shallow: true })
+				getUserInfo(user.uid).then((dadocument) => {
+					if (id) {
+						if (dadocument.data().housesJoined && dadocument.data().housesJoined.includes(id)) {
+							getHouseInfo(id, user.uid).then((thehousedata) => {
+								setHouse(thehousedata.data())
+							})
+						} else {
+							router.push('/app', undefined, { shallow: true })
+						}
 					}
 				});
 
@@ -35,7 +35,7 @@ const RoomPage = () => {
 			}
 
 		});
-	}
+	}, [getUser, setUserUID, getUserInfo, getHouseInfo, setHouse, router, id])
 
 
 
@@ -45,16 +45,18 @@ const RoomPage = () => {
 				<title>House | Roomss</title>
 			</Head>
 			<div className="text-white">
-				<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden -z-50 blur-md bg-cover bg-center" style={{ backgroundImage: 'url("/img/roomss.png")' }}>
+				<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden -z-50 blur-md bg-cover bg-center" style={{ backgroundImage: `url("${house && house.data.banner ? house.data.banner : "/img/roomss.png"}")` }}>
 				</div>
-				<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden -z-30 bg-opacity-50 bg-black">
+				<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden -z-30 bg-opacity-30 bg-black">
 				</div>
 				<UserDropdown uid={userUID} />
-				<Link href="/app">
-					<div className="">
-						<Icons icon="arrow-left" /> Home
-					</div>
-				</Link>
+				<div className="absolute top-6 opacity-75 transition hover:opacity-100 left-8">
+					<Link href="/app">
+						<div className="w-fit flex items-center">
+							<Icons icon="arrow-left" className="mr-2" /> Home
+						</div>
+					</Link>
+				</div>
 				{house ?
 					(
 						<div className="select-none text-xl mt-10 space-y-2 ml-6 p-2 font-semibold max-w-[83.333333%] w-3/6">

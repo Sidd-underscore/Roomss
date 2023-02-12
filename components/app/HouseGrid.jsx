@@ -53,7 +53,7 @@ const HouseGrid = (uid) => {
 		setIsHouseCreationLoading(true)
 		uploadFile(houseAvatar.blob, 'houses/avatars/' + uuidv4(), houseAvatar.blob.type).then((d) => {
 			uploadFile(houseBanner.blob, 'houses/banners/' + uuidv4(), houseBanner.blob.type).then((i) => {
-				createHouse({ avatar: d, banner: i, name: houseName, description: houseDescription, users: arrayUnion(uid.uid), keyForReact: uuidv4() }).then((e) => {
+				createHouse({ avatar: d, banner: i, name: houseName, description: houseDescription, users: arrayUnion(uid.uid) }).then((e) => {
 					updateUserInfo(uid.uid, { housesJoined: arrayUnion(e.id) }).then(() => {
 						setShowCreateHouseModal(false)
 						setIsHouseCreationLoading(false)
@@ -84,10 +84,10 @@ const HouseGrid = (uid) => {
 			) : (
 				<>
 					{hasJoinedHouses ? (
-						<div className="card-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8" >
+						<div className="card-grid grid grid-cols-1 grid-flow-row md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8" >
 							{
 								houses.map((house, index) => (
-									<div key={house.data.keyForReact} >
+									<div key={house.id} >
 										<Link href={`/app/houses/${house.id}`}>
 											<div className="transition duration-200 ease cursor-pointer hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg select-none bg-dark-lighter transition duration-200 ease text-left rounded-md">
 												<Image priority width={288} height={144} alt="House banner" src={house.data.banner} className="object-cover bg-dark-darker h-36 w-full rounded-md rounded-br-none rounded-bl-none relative block bg-center bg-cover" />
@@ -105,7 +105,7 @@ const HouseGrid = (uid) => {
 									</div>
 								))
 							}
-							<div onClick={() => setShowCreateHouseModal(true)} className="cursor-pointer select-none bg-dark-darker transition duration-200 ease hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg  text-center bg-center bg-splash-1 bg-no-repeat bg-cover rounded-md flex items-center justify-center">
+							<div onClick={() => setShowCreateHouseModal(true)} className="cursor-pointer select-none bg-dark-darker transition duration-200 ease hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg  text-center bg-center bg-splash-1 bg-no-repeat bg-cover rounded-md h-72 flex items-center justify-center">
 								<div className="h-full w-full rounded-md text-center bg-black bg-opacity-50 items-center content-center backdrop-blur-sm">
 									<div className="flex items-center justify-center mt-[10%]">
 										<Icons icon="plus" className="h-24 w-24" />
