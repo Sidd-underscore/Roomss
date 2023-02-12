@@ -12,6 +12,7 @@
     "@emoji-mart/react": "^1.1.1",
     "@headlessui/react": "^1.7.7",
     "@next/eslint-plugin-next": "^13.1.6",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@vercel/analytics": "^0.1.8",
     "emoji-mart": "^5.4.0",
     "firebase": "^9.15.0",

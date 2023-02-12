@@ -59,11 +59,11 @@ const RoomPage = () => {
 				</div>
 				{house ?
 					(
-						<div className="select-none text-xl mt-10 space-y-2 ml-6 p-2 font-semibold max-w-[83.333333%] w-3/6">
-							<div className="text-5xl mt-4 mb-4 font-bold">
+						<div className="select-none text-xl mt-10 space-y-2 ml-6 p-2 font-semibold max-w-[83.333333%] w-4/6">
+							<div className="text-5xl mt-4 mb-4 font-bold" title={house.data.name}>
 								{house.data.name}
 							</div>
-							{house.data.description}
+							<p className="max-h-48 line-clamp-4" title={house.data.description}>{house.data.description}</p>
 						</div>
 					) :
 					(
