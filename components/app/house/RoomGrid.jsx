@@ -112,7 +112,7 @@ const RoomGrid = ({ uid, houseID }) => {
 
 				<Dialog as="div" unmount={true} className="relative z-[100]" onClose={() => setShowCreateRoomModal(false)}>
 
-					<BlurredModalBackground />
+					<BlurredModalBackground show={showCreateHouseModal}/>
 
 					<div className="fixed inset-0 overflow-y-auto">
 						<ModalTransitionAsChild className="p-4 top-0 2xl:top-8 hidden xl:block fixed rounded-md mt-4 w-full">
