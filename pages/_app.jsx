@@ -1,5 +1,5 @@
 import '../public/css/styles.css'
-import Router from 'next/router'
+import {Router, useRouter } from 'next/router'
 import { useState, useEffect, } from 'react';
 import NProgress from 'nprogress'
 import { Analytics } from '@vercel/analytics/react';
@@ -7,7 +7,9 @@ import { Analytics } from '@vercel/analytics/react';
 
 function MyApp({ Component, pageProps }) {
 	NProgress.configure({ showSpinner: false });
+	const [url, setUrl] = useState()
 	useEffect(() => {
+		setUrl(window.location.hostname)
 		Router.events.on("routeChangeStart", (url) => {
 			NProgress.start()
 		})
@@ -48,7 +50,7 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<>
 			<Component className="bg-dark" {...pageProps} />
-			<Analytics />
+			{url && url === 'roomss.vercel.com' ? <Analytics /> : null }
 		</>
 	)
 }
