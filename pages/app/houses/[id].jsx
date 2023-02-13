@@ -50,13 +50,7 @@ const RoomPage = () => {
 				<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden -z-30 bg-opacity-30 bg-black">
 				</div>
 				<UserDropdown uid={userUID} />
-				<div className="absolute top-6 opacity-75 transition hover:opacity-100 left-8">
-					<Link href="/app">
-						<div className="w-fit flex items-center">
-							<Icons icon="arrow-left" className="mr-2" /> Home
-						</div>
-					</Link>
-				</div>
+				
 				{house ?
 					(
 						<div className="select-none text-xl mt-10 space-y-2 ml-6 p-2 font-semibold max-w-[83.333333%] w-4/6">
