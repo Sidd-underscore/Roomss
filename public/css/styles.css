@@ -2024,6 +2024,18 @@ video {
   counter-reset: step;
 }
 
+.\[position\:absolut\] {
+  position: absolut;
+}
+
+.\[position\:absolute\] {
+  position: absolute;
+}
+
+.\[position\:unset\] {
+  position: unset;
+}
+
 @font-face {
   font-family: "Roomss Emojis";
 
