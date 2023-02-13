@@ -1,5 +1,5 @@
 import Loader from '../utility/Loader'
-import BlurredModalBackground from '../utility/BlurredModalBackground'
+import ModalBackground from '../utility/ModalBackground'
 import ModalTransitionAsChild from '../transitions/childs/ModalTransitionAsChild'
 import { useState, Fragment, useRef, useEffect } from 'react'
 import { app, getUserInfo, updateUserInfo, createHouse, uploadFile, getHouseInfo } from "../../firebase/main"
@@ -137,20 +137,22 @@ const HouseGrid = (uid) => {
 			)}
 			<Transition appear show={showCreateHouseModal} as={Fragment}>
 
-				<Dialog as="div" unmount={true} className="relative z-[100]" onClose={() => setShowCreateHouseModal(false)}>
+				<Dialog as="div" unmount={true} className="relative z-[100]" onClose={() => setShowCreateRoomModal(false)}>
 
-					<BlurredModalBackground show={showCreateHouseModal} />
+					<ModalBackground />
 
 					<div className="fixed inset-0 overflow-y-auto">
-						<ModalTransitionAsChild className="p-4 top-0 2xl:top-8 hidden xl:block fixed rounded-md mt-4 w-full">
-							<ul className="overflow-hidden text-center [counter-reset:step] ">
-								<li className={`list-none text-white uppercase text-sm w-4/12 float-left relative before:w-5 before:leading-5 before:block before:text-md before:text-white before:bg-primary before:rounded-md before:[margin:0_auto_5px_auto] after:[content:_''] after:w-full after:h-1 after:rounded-full after:absolute after:[left:-50%] after:[top:9px] after:-z-[1] before:content-[counter(step)] before:[counter-increment:_step]`}>Basic Info</li>
-								<li className={`list-none text-white uppercase text-sm w-4/12 float-left relative before:w-5 before:leading-5 before:block before:text-md before:text-white before:bg-primary before:rounded-md before:[margin:0_auto_5px_auto] after:[content:_''] after:w-full after:h-1 after:rounded-full after:absolute after:[left:-50%] after:[top:9px] ${completedSteps > 0 ? "after:bg-primary" : ""} after:-z-[1] before:content-[counter(step)] before:[counter-increment:_step]`}>Images</li>
-								<li className={`list-none text-white uppercase text-sm w-4/12 float-left relative before:w-5 before:leading-5 before:block before:text-md before:text-white before:bg-primary before:rounded-md before:[margin:0_auto_5px_auto] after:[content:_''] after:w-full after:h-1 after:rounded-full after:absolute after:[left:-50%] after:[top:9px] ${completedSteps > 1 ? "after:bg-primary" : ""} after:-z-[1] before:content-[counter(step)] before:[counter-increment:_step]`}>Preview</li>
-							</ul>
-						</ModalTransitionAsChild>
+
 						<div className="flex min-h-full items-center justify-center p-4 text-center">
+
 							<ModalTransitionAsChild className="w-full max-w-2xl">
+								<div className="p-4 top-0 2xl:top-8 hidden xl:block [position:unset] rounded-md mt-4 w-full">
+									<ul className="overflow-hidden text-center [counter-reset:step] ">
+										<li className={`list-none text-white uppercase text-sm w-4/12 float-left relative before:w-5 before:leading-5 before:block before:text-md before:text-white before:bg-primary before:rounded-md before:[margin:0_auto_5px_auto] after:[content:_''] after:w-full after:h-1 after:rounded-full after:absolute after:[left:-50%] after:[top:9px] after:-z-[1] before:content-[counter(step)] before:[counter-increment:_step]`}>Basic Info</li>
+										<li className={`list-none text-white uppercase text-sm w-4/12 float-left relative before:w-5 before:leading-5 before:block before:text-md before:text-white before:bg-primary before:rounded-md before:[margin:0_auto_5px_auto] after:[content:_''] after:w-full after:h-1 after:rounded-full after:absolute after:[left:-50%] after:[top:9px] ${completedSteps > 0 ? "after:bg-primary" : ""} after:-z-[1] before:content-[counter(step)] before:[counter-increment:_step]`}>Images</li>
+										<li className={`list-none text-white uppercase text-sm w-4/12 float-left relative before:w-5 before:leading-5 before:block before:text-md before:text-white before:bg-primary before:rounded-md before:[margin:0_auto_5px_auto] after:[content:_''] after:w-full after:h-1 after:rounded-full after:absolute after:[left:-50%] after:[top:9px] ${completedSteps > 1 ? "after:bg-primary" : ""} after:-z-[1] before:content-[counter(step)] before:[counter-increment:_step]`}>Preview</li>
+									</ul>
+								</div>
 								<Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-lg p-6 text-left align-middle text-white transition-all">
 
 									<Dialog.Title

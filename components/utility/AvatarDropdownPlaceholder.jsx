@@ -37,7 +37,7 @@ return (
 					width={52}
 					height={52}
 					priority
-					className={`${loading ? 'animate-pulse' : 'animate-none'} bg-dark-darker rounded-full`}
+					className={`${loading ? 'animate-pulse' : 'animate-none'} rounded-full`}
 				/>
 				<div className="hidden md:block md:space-y-2 text-left font-medium hidden md:block">
 					<div className="w-24 truncate text-lg" title={userData.name}>
@@ -56,7 +56,7 @@ return (
 					width={52}
 					height={52}
 					priority
-					className='animate-pulse bg-dark-darker rounded-full'
+					className='animate-pulse rounded-full'
 				/>
 				<div className="hidden md:block space-y-2 text-left hidden md:block">
 					<div className="w-24 truncate rounded-md animate-pulse h-6 bg-dark-lightest">
