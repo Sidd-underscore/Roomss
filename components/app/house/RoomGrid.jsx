@@ -105,6 +105,7 @@ const RoomGrid = ({ uid, houseID }) => {
 									roomss.map((room, index) => (
 										<div className="transition mt-8 duration-200 ease cursor-pointer hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" key={room.room.id} >
 											<Link href={`/app/houses/${houseID}/roomss/${room.room.id}`}>
+												<div>
 												<Image alt="The room avatar" src={room.room.avatar} width={114} height={114} className="logo -mt-8 mb-1 left-4 top-0 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" priority />
 												<div className="content p-4">
 													<div className="text-xl mb-2 font-bold rounded-lg w-auto truncate">
@@ -112,6 +113,7 @@ const RoomGrid = ({ uid, houseID }) => {
 													</div>
 													{room.room.description}
 												</div>
+													</div>
 											</Link>
 										</div>
 									))
@@ -206,7 +208,7 @@ const RoomGrid = ({ uid, houseID }) => {
 																<Combobox.Options className="absolute mt-1 max-h-[20vh] w-full rounded-md overflow-auto bg-dark z-50  shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none text-white sm:text-sm">
 																	{filteredRoomTypes.length === 0 && query !== '' ? (
 																		<div className="relative cursor-default select-none py-2 px-4 text-center">
-																			No Room type found. Suggest it <a href="https://github.com/Sidd-underscore/Roomss/issues/new?assignees=&labels=&template=new-room-type.md&title=%5BNewRoom%5D" className="font-medium underline hover:no-underline" target="_blank">here</a>, or email <a href="mailto:hello@roomss.tk?subject=New%20Room%20Type%20Suggestion!&body=Room%20Idea%0D%0AWhat%20would%20this%20room%20do%3F%0D%0A%0D%0AWhy%20is%20it%20useful%3F%0D%0A%0D%0AWhat's%20it's%20name%3F%0D%0A%0D%0A%0D%0AConcept%20art%2Fgood%20description%20of%20what%20it%20would%20look%20like%0D%0A%0D%0AAnything%20else%3F%20(libraries%2C%20examples%2C%20etc)%0D%0A" className="font-medium underline hover:no-underline" target="_blank">hello@roomss.tk</a>.
+																			No Room type found. Suggest it <a rel="noreferrer" href="https://github.com/Sidd-underscore/Roomss/issues/new?assignees=&labels=&template=new-room-type.md&title=%5BNewRoom%5D" className="font-medium underline hover:no-underline" target="_blank">here</a>, or email <a rel="noreferrer" href="mailto:hello@roomss.tk?subject=New%20Room%20Type%20Suggestion!&body=Room%20Idea%0D%0AWhat%20would%20this%20room%20do%3F%0D%0A%0D%0AWhy%20is%20it%20useful%3F%0D%0A%0D%0AWhat's%20it's%20name%3F%0D%0A%0D%0A%0D%0AConcept%20art%2Fgood%20description%20of%20what%20it%20would%20look%20like%0D%0A%0D%0AAnything%20else%3F%20(libraries%2C%20examples%2C%20etc)%0D%0A" className="font-medium underline hover:no-underline" target="_blank">hello@roomss.tk</a>.
 																		</div>
 																	) : (
 																		filteredRoomTypes.map((type) => (
