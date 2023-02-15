@@ -79,7 +79,7 @@ const App = () => {
 						</defs>
 					</svg>
 				</div>
-				<UserDropdown uid={userUID} />
+				<UserDropdown data={userData} uid={userUID}/>
 				{name ?
 					(
 						<div className="select-none text-2xl mt-10 space-y-2 ml-6 p-2 font-semibold max-w-[83.333333%] w-3/6">Good {timeOfDay},

@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, onSnapshot, updateDoc, doc, addDoc, collection } from "firebase/firestore";
+import { getFirestore, onSnapshot, updateDoc, doc, addDoc, collection, arrayUnion } from "firebase/firestore";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -25,6 +25,7 @@ let CreateHouse;
 let UploadFile;
 let Storage;
 let GetHouseInfo;
+let CreateRoom;
 
 if (typeof window !== "undefined") {
 
@@ -125,6 +126,14 @@ if (typeof window !== "undefined") {
 			});
 		})
 	}
+
+	CreateRoom = (data, id) => {
+		return new Promise(async (resolve, reject) => {
+			updateDoc(doc(db, "houses", id), { roomss: arrayUnion(data) }).then(() => {
+				resolve()
+			})
+		})
+	}
 }
 
 
@@ -139,3 +148,4 @@ export const getUser = GetUser;
 export const createHouse = CreateHouse;
 export const uploadFile = UploadFile;
 export const getHouseInfo = GetHouseInfo;
+export const createRoom = CreateRoom;

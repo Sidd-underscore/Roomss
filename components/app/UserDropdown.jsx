@@ -4,7 +4,7 @@ import MainTransition from '../transitions/MainTransition'
 import AvatarDropdownPlaceholder from '../utility/AvatarDropdownPlaceholder'
 import Status from './Status'
 
-const UserDropdown = ({ uid }) => {
+const UserDropdown = ({ data, uid }) => {
 	const [showStatusModal, setShowStatusModal] = useState(false);
 
 	return (
@@ -12,7 +12,7 @@ const UserDropdown = ({ uid }) => {
 			<Menu as="div" className="md:ring-1 md:ring-black md:ring-opacity-5 relative cursor-pointer md:p-2 mx-4/6 rounded-lg fixed md:bg-black md:bg-opacity-25 md:backdrop-blur-md inline-block md:focus-visible:ring-2 md:focus-visible:ring-white md:focus-visible:ring-opacity-75">
 				<div>
 					<Menu.Button className="inline-block w-full justify-center px-4 py-2 text-sm font-medium text-white vertical-middle focus:outline-none">
-						<AvatarDropdownPlaceholder />
+						<AvatarDropdownPlaceholder data={data} />
 					</Menu.Button>
 				</div>
 				<MainTransition
