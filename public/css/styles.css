@@ -1063,6 +1063,10 @@ video {
   width: 9rem;
 }
 
+.w-7 {
+  width: 1.75rem;
+}
+
 .w-60 {
   width: 15rem;
 }
@@ -1153,10 +1157,6 @@ video {
 
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-none {
-  animation: none;
 }
 
 @keyframes spin {
@@ -1667,12 +1667,16 @@ video {
   padding-bottom: 1.5rem;
 }
 
-.pl-4 {
-  padding-left: 1rem;
-}
-
 .pl-2 {
   padding-left: 0.5rem;
+}
+
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+.pl-12 {
+  padding-left: 3rem;
 }
 
 .text-left {
@@ -1832,6 +1836,14 @@ video {
 .text-gray-200 {
   --tw-text-opacity: 1;
   color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+
+.text-opacity-50 {
+  --tw-text-opacity: 0.5;
+}
+
+.text-opacity-100 {
+  --tw-text-opacity: 1;
 }
 
 .underline {
@@ -2016,7 +2028,7 @@ video {
 }
 
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -2025,9 +2037,7 @@ video {
 
 ::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
-  border-radius: 20px;
-  border: 5px solid transparent;
-  background-clip: content-box;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
