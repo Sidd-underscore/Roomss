@@ -40,16 +40,20 @@ const RoomPage = () => {
 
 
 	return (
-		<>
+			<>
 			<Head>
 				<title>House | Roomss</title>
 			</Head>
 			<div className="text-white">
-				<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden -z-50 blur-md bg-cover bg-center" style={{ backgroundImage: `url("${house && house.data.banner ? house.data.banner : "/img/roomss.png"}")` }}>
-				</div>
+				{house && house.data.banner ? (
+					<div className={`fixed top-0 left-0 w-screen h-screen overflow-hidden animate-fadein -z-30 blur-md bg-cover bg-center`} >
+					<img src={house.data.banner} className="w-full"/>
+					</div>
+				) : ''}
+
 				<UserDropdown data={userData} uid={userUID} />
 				<div className="flex">
-					<div className="w-3/12 space-y-2 bg-dark-darker bg-opacity-25 h-screen" >
+					<div className="w-3/12 space-y-2 bg-dark-darker bg-opacity-25 h-screen overflow-auto" >
 						<RoomGrid data={userData} uid={userUID} houseID={id} />
 					</div>
 					<div className="w-9/12 bg-dark-darker bg-opacity-50 h-screen">

@@ -54,7 +54,7 @@ const RoomPage = () => {
 
 				<UserDropdown data={userData} uid={userUID} />
 				<div className="flex">
-					<div className="w-3/12 space-y-2 bg-dark-darker bg-opacity-25 h-screen" >
+					<div className="w-3/12 space-y-2 bg-dark-darker bg-opacity-25 h-screen overflow-auto" >
 						<RoomGrid data={userData} uid={userUID} houseID={id} />
 					</div>
 					<div className="w-9/12 bg-dark-darker bg-opacity-50 h-screen">

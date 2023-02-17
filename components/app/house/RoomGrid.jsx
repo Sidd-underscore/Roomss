@@ -47,7 +47,7 @@ const RoomGrid = ({ uid, houseID, data }) => {
 					.replace(/\s+/g, '')
 					.includes(query.toLowerCase().replace(/\s+/g, ''))
 			)
-		var theyHouses = [];
+	var theyHouses = [];
 
 	useEffect(() => {
 		var theyRoomss = [];
@@ -94,8 +94,8 @@ const RoomGrid = ({ uid, houseID, data }) => {
 	return (
 		<>
 
-			<div className="p-4">
-				<Menu as="div" className="w-full sticky top-0 z-50 ring-white ring-opacity-5 ring-1 relative cursor-pointer rounded-lg fixed transition backdrop-blur-md inline-block focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+			<div className="p-4 overflow-y-auto">
+				<Menu as="div" className="w-full sticky top-4 z-50 ring-white ring-opacity-5 ring-1 relative cursor-pointer rounded-lg fixed transition backdrop-blur-md inline-block focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
 					<Menu.Button title="Switch House" className="justify-between w-full px-6 py-4 text-xl flex space-x-2 transition rounded-lg hover:bg-opacity-50 bg-black bg-opacity-25 items-center font-medium text-white vertical-middle focus:outline-none">
 						<div className="flex items-center">
 							{houseInfo ? (<Image src={houseInfo.data.avatar} height={28} width={28} alt="The current houses's avatar" className="aspect-square rounded-full mr-2" priority />) : null}
@@ -111,7 +111,7 @@ const RoomGrid = ({ uid, houseID, data }) => {
 							{houses.map((house, index) => (
 								<>
 									{house.id === houseID ? null : (
-									
+
 										<Menu.Item key={JSON.stringify(house)}>
 											<Link
 												href={"/app/houses/" + house.id}
@@ -123,7 +123,7 @@ const RoomGrid = ({ uid, houseID, data }) => {
 											</Link>
 										</Menu.Item>
 									)}
-									
+
 								</>
 							))}
 
@@ -131,7 +131,8 @@ const RoomGrid = ({ uid, houseID, data }) => {
 						</Menu.Items>
 					</MainTransition>
 				</Menu>
-				<div className="my-4 h-1 rounded-full w-full bg-white bg-opacity-5" ></div>
+				<div className="my-8 h-1 rounded-full w-full bg-white bg-opacity-5" ></div>
+				<div className="mt-8">
 				{loading ? (
 					<div className="animate-pulse card-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8" >
 						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
@@ -154,13 +155,18 @@ const RoomGrid = ({ uid, houseID, data }) => {
 							<>
 								{
 									roomss.map((room, index) => (
-										<div className="transition ring-1 ring-white ring-opacity-5 hover:ring-opacity-25 mt-8 duration-200 ease cursor-pointer bg-opacity-25 hover:bg-opacity-50 hover:drop-shadow-lg select-none bg-black transition duration-200 ease text-left rounded-md" key={room.room.id} >
+										<div className="transition ring-1 ring-white ring-opacity-5 hover:ring-opacity-25 mt-2 duration-200 ease cursor-pointer bg-opacity-25 hover:bg-opacity-50 hover:drop-shadow-lg select-none bg-black transition duration-200 ease text-left rounded-md" key={room.room.id} >
 											<Link href={`/app/houses/${houseID}/roomss/${room.room.id}`}>
 												<div className="flex space-x-2">
 													<div className="relative">
 														<Image alt="The room avatar" src={room.room.avatar} width={56} height={56} className="m-3 logo aspect-square rounded-[50%] bg-dark-darker bg-opacity-50" priority />
 														<div className="absolute bg-black transition bg-opacity-25 p-1.5 rounded-full bottom-0 left-10">
 															{room.room.type && room.room.type === 'RoomType/TextChat' && <SolidIcons icon={'chat-bubble-left-right'} className="h-5 w-5" />}
+															{room.room.type && room.room.type === 'RoomType/VideoChat' && <SolidIcons icon={'camera'} className="h-5 w-5" />}
+															{room.room.type && room.room.type === 'RoomType/Canvas' && <SolidIcons icon={'paint-brush'} className="h-5 w-5" />}
+															{room.room.type && room.room.type === 'RoomType/DocumentEditor' && <SolidIcons icon={'document-text'} className="h-5 w-5" />}
+															{room.room.type && room.room.type === 'RoomType/Calendar' && <SolidIcons icon={'document-text'} className="h-5 w-5" />}
+															{room.room.type && room.room.type === 'RoomType/FileStorage' && <SolidIcons icon={'circle-stack'} className="h-5 w-5" />}
 														</div>
 													</div>
 													<div className="content pl-0 p-3 pb-3">
@@ -174,7 +180,17 @@ const RoomGrid = ({ uid, houseID, data }) => {
 										</div>
 									))
 								}
+								<div className="transition ring-1 ring-white ring-opacity-5 hover:ring-opacity-25 mt-8 duration-200 ease cursor-pointer bg-opacity-25 hover:bg-opacity-50 hover:drop-shadow-lg select-none bg-black transition duration-200 ease text-left rounded-md" onClick={() => setShowCreateRoomModal(true)}>
+									<div className="flex space-x-2">
+										<Icons icon="plus" className="m-3 h-14 w-14 logo aspect-square rounded-[50%]" />
 
+										<div className="content pl-0 flex items-center p-3 pb-3">
+											<div className="text-base mb-2 font-bold rounded-lg w-auto truncate">
+												Create another room?
+											</div>
+										</div>
+									</div>
+								</div>
 
 
 							</>
@@ -198,9 +214,8 @@ const RoomGrid = ({ uid, houseID, data }) => {
 					</>
 				)}
 
-
 			</div>
-
+		</div>
 			<Transition appear show={showCreateRoomModal} as={Fragment}>
 
 				<Dialog as="div" unmount={true} className="relative z-[100]" onClose={() => setShowCreateRoomModal(false)}>
@@ -280,7 +295,6 @@ const RoomGrid = ({ uid, houseID, data }) => {
 																							className={`block truncate font-medium`}
 																						>
 																							{type.name}
-																							{type.comingSoon && <span className="text-opacity-100 text-white p-2 bg-primary-low-opacity rounded-md border border-primary"> | coming soon</span>}
 																						</p>
 																						<p>
 																							{type.description}
