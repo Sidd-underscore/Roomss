@@ -38,7 +38,7 @@ const RoomPage = () => {
 		});
 	}, [setUserUID, setHouse, router, id])
 
-
+	
 
 	return (
 		<>
@@ -47,9 +47,10 @@ const RoomPage = () => {
 			</Head>
 			<div className="text-white">
 				{house && house.data.banner ? (
-				<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden animate-fadein -z-30 blur-md bg-cover transition transition-all bg-center" style={{ backgroundImage: `url("${house.data.banner}` }}>
-				</div>
-			) : null }
+					<div className={`fixed top-0 left-0 w-screen h-screen overflow-hidden animate-fadein -z-30 blur-md bg-cover bg-center`} >
+					<img src={house.data.banner} className="w-full"/>
+					</div>
+				) : ''}
 
 				<UserDropdown data={userData} uid={userUID} />
 				<div className="flex">
