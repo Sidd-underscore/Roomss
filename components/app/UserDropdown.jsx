@@ -9,7 +9,7 @@ const UserDropdown = ({ data, uid }) => {
 
 	return (
 		<div className="fixed top-0 right-0 z-50 mr-6 mt-10">
-			<Menu as="div" className="md:ring-1 md:ring-black md:ring-opacity-5 relative cursor-pointer md:p-2 mx-4/6 rounded-lg fixed md:bg-black md:bg-opacity-25 md:backdrop-blur-md inline-block md:focus-visible:ring-2 md:focus-visible:ring-white md:focus-visible:ring-opacity-75">
+			<Menu as="div" className="md:ring-1 md:ring-white transition md:ring-opacity-5 hover:bg-opacity-50 relative cursor-pointer md:p-2 mx-4/6 rounded-lg fixed md:bg-black md:bg-opacity-25 md:backdrop-blur-md inline-block md:focus-visible:ring-2 md:focus-visible:ring-white md:focus-visible:ring-opacity-75">
 				<div>
 					<Menu.Button className="inline-block w-full justify-center px-4 py-2 text-sm font-medium text-white vertical-middle focus:outline-none">
 						<AvatarDropdownPlaceholder data={data} />
@@ -22,7 +22,7 @@ const UserDropdown = ({ data, uid }) => {
 						<Menu.Item>
 							<button
 								onClick={() => setShowStatusModal(true)}
-								className={`transition ease-in-out duration-300 hover:bg-black hover:bg-opacity-20 flex w-full items-center rounded-md rounded-b-none p-3 text-sm`}
+								className={`transition ease-in-out duration-300 hover:bg-black hover:bg-opacity-100 flex w-full items-center rounded-md rounded-b-none p-3 text-sm`}
 							>
 								Status
 
