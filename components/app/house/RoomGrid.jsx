@@ -117,7 +117,7 @@ const RoomGrid = ({ uid, houseID, data }) => {
 												href={"/app/houses/" + house.id}
 												className={`transition ease-in-out duration-300 flex text-white hover:text-opacity-100 text-opacity-75 hover:font-medium w-full items-center p-3 text-sm`}
 											>
-												<Image src={house.data.avatar} height={16} width={16} alt="The current houses's avatar" className="rounded-full aspect-square mr-2" />
+												<Image src={house.data.avatar} height={16} width={16} alt="The current houses's avatar" className="rounded-full aspect-square mr-2" priority />
 												{house.data.name}
 
 											</Link>

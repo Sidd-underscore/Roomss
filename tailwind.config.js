@@ -22,9 +22,20 @@ module.exports = {
 			backgroundImage: {
 				'splash-1': "url('/img/splash_1.png')",
 			},
+			keyframes: {
+
+				fadeIn: {
+					'0%': { opacity: 0 },
+					'50%': {opacity: 0},
+					'100%': { opacity: 1 },
+				}
+			},
+			animation: {
+				'fadein': '750ms linear 0s fadeIn',
+			},
 		},
 	},
 	plugins: [
-		    require('@tailwindcss/line-clamp'),
+		require('@tailwindcss/line-clamp'),
 	],
 }
