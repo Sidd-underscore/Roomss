@@ -5,6 +5,7 @@ import UserDropdown from "../../../components/app/UserDropdown";
 import { app, getUser, getUserInfo, getHouseInfo } from "../../../firebase/main";
 import RoomGrid from '../../../components/app/house/RoomGrid'
 import RoomViewer from '../../../components/app/house/RoomViewer';
+import Loader from '../../../components/utility/Loader';
 
 const RoomPage = () => {
 	const router = useRouter()
@@ -45,8 +46,11 @@ const RoomPage = () => {
 				<title>House | Roomss</title>
 			</Head>
 			<div className="text-white">
-				<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden -z-50 blur-md bg-cover bg-center" style={{ backgroundImage: `url("${house && house.data.banner ? house.data.banner : "/img/roomss.png"}")` }}>
+				{house && house.data.banner ? (
+				<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden animate-fadein -z-30 blur-md bg-cover transition transition-all bg-center" style={{ backgroundImage: `url("${house.data.banner}` }}>
 				</div>
+			) : null }
+
 				<UserDropdown data={userData} uid={userUID} />
 				<div className="flex">
 					<div className="w-3/12 space-y-2 bg-dark-darker bg-opacity-25 h-screen" >
