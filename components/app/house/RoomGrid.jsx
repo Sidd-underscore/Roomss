@@ -4,7 +4,7 @@ import ModalTransitionAsChild from '../../transitions/childs/ModalTransitionAsCh
 import { useState, Fragment, useEffect } from 'react'
 import { createRoom, uploadFile, getHouseInfo } from "../../../firebase/main"
 import Illustrations from "../../utility/Illustrations"
-import { Dialog, Transition, Combobox } from '@headlessui/react'
+import { Dialog, Transition, Combobox, Menu } from '@headlessui/react'
 import Button from "../../Button"
 import Icons from '../../utility/Icons'
 import SolidIcons from '../../utility/SolidIcons'
@@ -13,8 +13,9 @@ import MainButton from '../../MainButton'
 import { v4 as uuidv4 } from 'uuid';
 import Image from 'next/image'
 import Link from 'next/link'
+import MainTransition from '../../transitions/MainTransition'
 
-const RoomGrid = ({ uid, houseID }) => {
+const RoomGrid = ({ uid, houseID, data }) => {
 	const [loading, setLoading] = useState(true)
 	const [isRoomCreationLoading, setIsRoomCreationLoading] = useState(false)
 	const [hasRoomss, setHasRoomss] = useState(false)
@@ -24,11 +25,14 @@ const RoomGrid = ({ uid, houseID }) => {
 	const [completedSteps, setCompletedSteps] = useState(0)
 	const [roomAvatar, setRoomAvatar] = useState()
 	const [roomss, setRoomss] = useState([])
+	const [houses, setHouses] = useState([])
+	const [houseInfo, setHouseInfo] = useState()
 	const roomTypes = [
 		{ id: 'RoomType/TextChat', name: 'Text Chat', description: 'Chat by typing', comingSoon: true, icon: 'chat-bubble-left-right' },
 		{ id: 'RoomType/VideoChat', name: 'Video Chat', description: 'See some other people\'s faces while talking', comingSoon: true, icon: 'camera' },
 		{ id: 'RoomType/Canvas', name: 'Canvas', description: 'Draw in an unlimited canvas using shapes, arrows, text boxes, freepen and more', comingSoon: true, icon: 'paint-brush' },
 		{ id: 'RoomType/DocumentEditor', name: 'Document Editor', description: 'Edit documents using top of the line features', comingSoon: true, icon: 'document-text' },
+		{ id: 'RoomType/Calendar', name: 'Calendar', description: 'Schedulte events and set notifications to rmember these events.', comingSoon: true, icon: 'document-text' },
 		{ id: 'RoomType/FileStorage', name: 'File Storage', description: 'Store files, share files, admire files', comingSoon: true, icon: 'circle-stack' },
 	]
 	const [selectedType, setSelectedType] = useState(roomTypes[0])
@@ -43,12 +47,14 @@ const RoomGrid = ({ uid, houseID }) => {
 					.replace(/\s+/g, '')
 					.includes(query.toLowerCase().replace(/\s+/g, ''))
 			)
+		var theyHouses = [];
 
 	useEffect(() => {
 		var theyRoomss = [];
 		if (uid && uid != '' && houseID) {
 			getHouseInfo(houseID, uid).then((doc) => {
 				if (doc.data()) {
+					setHouseInfo(doc.data())
 					if (doc.data().roomss && doc.data().roomss.length != 0) {
 						doc.data().roomss.forEach((room) => {
 							theyRoomss.push({ room })
@@ -63,7 +69,17 @@ const RoomGrid = ({ uid, houseID }) => {
 				}
 			});
 		}
-	}, [uid, houseID]);
+		if (data) {
+			data.housesJoined.forEach((house) => {
+				getHouseInfo(house, uid).then((thehousedata) => {
+					theyHouses.push({ data: thehousedata.data().data, id: house })
+					setHouses(theyHouses)
+				})
+			})
+		}
+
+	}, [uid, houseID, data, setHouses, theyHouses]);
+
 
 	const makeTheRoom = () => {
 		setIsRoomCreationLoading(true)
@@ -73,14 +89,49 @@ const RoomGrid = ({ uid, houseID }) => {
 				setIsRoomCreationLoading(false)
 			})
 		})
-
-
-
 	}
 
 	return (
 		<>
-			<div className="p-8 mt-10">
+
+			<div className="p-4">
+				<Menu as="div" className="w-full sticky top-0 z-50 ring-white ring-opacity-5 ring-1 relative cursor-pointer rounded-lg fixed transition backdrop-blur-md inline-block focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+					<Menu.Button title="Switch House" className="justify-between w-full px-6 py-4 text-xl flex space-x-2 transition rounded-lg hover:bg-opacity-50 bg-black bg-opacity-25 items-center font-medium text-white vertical-middle focus:outline-none">
+						<div className="flex items-center">
+							{houseInfo ? (<Image src={houseInfo.data.avatar} height={28} width={28} alt="The current houses's avatar" className="aspect-square rounded-full mr-2" priority />) : null}
+							{houseInfo ? (<span className="truncate text-lg">{houseInfo.data.name}</span>) : (<span className="w-full mr-4 h-7 rounded-md animate-pulse bg-dark-lighter"></span>)}
+						</div>
+						<Icons icon="chevron-down" className="pl-2 w-6 h-6" />
+
+					</Menu.Button>
+					<MainTransition
+						as={Fragment}
+					>
+						<Menu.Items className="absolute text-white right-0 mt-2 w-full origin-top-right z-[500] rounded-lg bg-black transition ring-white ring-opacity-5 shadow-lg ring-1 focus:outline-none">
+							{houses.map((house, index) => (
+								<>
+									{house.id === houseID ? null : (
+									
+										<Menu.Item key={JSON.stringify(house)}>
+											<Link
+												href={"/app/houses/" + house.id}
+												className={`transition ease-in-out duration-300 flex text-white hover:text-opacity-100 text-opacity-75 hover:font-medium w-full items-center p-3 text-sm`}
+											>
+												<Image src={house.data.avatar} height={16} width={16} alt="The current houses's avatar" className="rounded-full aspect-square mr-2" />
+												{house.data.name}
+
+											</Link>
+										</Menu.Item>
+									)}
+									
+								</>
+							))}
+
+
+						</Menu.Items>
+					</MainTransition>
+				</Menu>
+				<div className="my-4 h-1 rounded-full w-full bg-white bg-opacity-5" ></div>
 				{loading ? (
 					<div className="animate-pulse card-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8" >
 						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
@@ -100,43 +151,40 @@ const RoomGrid = ({ uid, houseID }) => {
 				) : (
 					<>
 						{hasRoomss ? (
-							<div className="card-grid grid grid-cols-1 grid-flow-row md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8" >
+							<>
 								{
 									roomss.map((room, index) => (
-										<div className="transition mt-8 duration-200 ease cursor-pointer hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" key={room.room.id} >
+										<div className="transition ring-1 ring-white ring-opacity-5 hover:ring-opacity-25 mt-8 duration-200 ease cursor-pointer bg-opacity-25 hover:bg-opacity-50 hover:drop-shadow-lg select-none bg-black transition duration-200 ease text-left rounded-md" key={room.room.id} >
 											<Link href={`/app/houses/${houseID}/roomss/${room.room.id}`}>
-												<div>
-												<Image alt="The room avatar" src={room.room.avatar} width={114} height={114} className="logo -mt-8 mb-1 left-4 top-0 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" priority />
-												<div className="content p-4">
-													<div className="text-xl mb-2 font-bold rounded-lg w-auto truncate">
-														{room.room.name}
+												<div className="flex space-x-2">
+													<div className="relative">
+														<Image alt="The room avatar" src={room.room.avatar} width={56} height={56} className="m-3 logo aspect-square rounded-[50%] bg-dark-darker bg-opacity-50" priority />
+														<div className="absolute bg-black transition bg-opacity-25 p-1.5 rounded-full bottom-0 left-10">
+															{room.room.type && room.room.type === 'RoomType/TextChat' && <SolidIcons icon={'chat-bubble-left-right'} className="h-5 w-5" />}
+														</div>
 													</div>
-													{room.room.description}
+													<div className="content pl-0 p-3 pb-3">
+														<div className="text-base mb-2 font-bold rounded-lg w-auto truncate">
+															{room.room.name}
+														</div>
+														<div className="text-sm">{room.room.description}</div>
+													</div>
 												</div>
-													</div>
 											</Link>
 										</div>
 									))
 								}
-								<div onClick={() => setShowCreateRoomModal(true)} className="cursor-pointer select-none bg-dark-darker transition duration-200 ease hover:-translate-y-1 hover:scale-105 hover:drop-shadow-lg text-center bg-center bg-splash-1 bg-no-repeat bg-cover rounded-md h-72 flex items-center justify-center">
-									<div className="h-full w-full rounded-md text-center bg-black bg-opacity-50 items-center content-center backdrop-blur-sm">
-										<div className="flex items-center justify-center mt-[10%]">
-											<Icons icon="plus" className="h-24 w-24" />
-										</div>
-										<br />
-										<div className="content p-8">
-											<div className="title text-xl">Create a room?</div>
-										</div>
-									</div>
-								</div>
-							</div>
+
+
+
+							</>
 						) : (
 							<div className="flex text-center content-center justify-center">
 								<div>
 
-									<Illustrations className="w-96 h-96 drop-shadow-md" illustration="empty-bookshelf" />
+									<Illustrations className="w-full h-full drop-shadow-md" illustration="empty-bookshelf" />
 
-									<div className="mt-8 text-lg font-medium text-shadow-md ">
+									<div className="mt-4 text-lg font-medium text-shadow-md ">
 										No Roomss :(
 									</div>
 									<div onClick={() => setShowCreateRoomModal(true)} className="text-shadow-md text-gray-200 text-md font-medium underline hover:no-underline cursor-pointer">
@@ -144,10 +192,15 @@ const RoomGrid = ({ uid, houseID }) => {
 									</div>
 								</div>
 							</div>
+
 						)}
+
 					</>
 				)}
+
+
 			</div>
+
 			<Transition appear show={showCreateRoomModal} as={Fragment}>
 
 				<Dialog as="div" unmount={true} className="relative z-[100]" onClose={() => setShowCreateRoomModal(false)}>
@@ -219,7 +272,7 @@ const RoomGrid = ({ uid, houseID }) => {
 																					}`
 																				}
 																				value={type}
-																				
+
 																			>
 																				{({ selected, active }) => (
 																					<>
@@ -227,17 +280,17 @@ const RoomGrid = ({ uid, houseID }) => {
 																							className={`block truncate font-medium`}
 																						>
 																							{type.name}
-																							{type.comingSoon && <span className="text-opacity-100 text-white"> | coming soon</span>}
+																							{type.comingSoon && <span className="text-opacity-100 text-white p-2 bg-primary-low-opacity rounded-md border border-primary"> | coming soon</span>}
 																						</p>
 																						<p>
 																							{type.description}
 																						</p>
-																							<span
-																								className={`absolute inset-y-0 left-0 flex items-center pl-2`}
-																							>
-																								<SolidIcons icon={type.icon} className="h-6 w-6" aria-hidden="true" />
-																								
-																							</span>
+																						<span
+																							className={`absolute inset-y-0 left-0 flex items-center pl-2`}
+																						>
+																							<SolidIcons icon={type.icon} className="h-6 w-6" aria-hidden="true" />
+
+																						</span>
 																					</>
 																				)}
 																			</Combobox.Option>
@@ -266,7 +319,7 @@ const RoomGrid = ({ uid, houseID }) => {
 																) : (
 																	<FileInput maxFiles={1} setFile={setRoomAvatar} accepts={{ 'image/*': ['.jpeg', '.png', '.wepb', '.gif'] }} showText={false} className="rounded-full w-32 h-32" />
 																)}
-																<p className="text-sm mt-4 text-gray-400">For best results, upload a <code>80x80</code> pixel image and make sure that image is square</p>
+																<p className="text-sm mt-4 text-gray-400">For best results, upload a <code>56x56</code> pixel image and make sure that image is square</p>
 
 
 															</div>
