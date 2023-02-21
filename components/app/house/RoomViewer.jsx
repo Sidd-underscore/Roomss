@@ -1,8 +1,7 @@
 import {useState, useEffect} from 'react'
+import ChatRoom from '../chat/Room'
 
-
-
-const RoomViewer = ({ isEmpty }) => {
+const RoomViewer = ({ isEmpty, roomID, userData, uid }) => {
 	const textThings = [
 	{emoji: '🌱', title: 'Tend to your Roomss', description: 'Make sure to keep tabs on all your Roomss to remain up-to-date on everything'},
 	{emoji: '🪄', title: 'What magic will you create today?'},
@@ -23,7 +22,7 @@ const RoomViewer = ({ isEmpty }) => {
 			{isEmpty && isEmpty === true ? (
 				<div className="flex justify-center h-screen text-center items-center">
 					<div className="w-2/5">
-					<div className="text-9xl select-none cursor-pointer" onClick={() => {setTheTextThing(textThings[Math.floor(Math.random() * textThings.length)])}}>
+					<div className="text-9xl select-none cursor-default">
 						{theTextThing.emoji}
 					</div>
 					<div className="text-2xl mt-8 font-bold">
@@ -36,9 +35,13 @@ const RoomViewer = ({ isEmpty }) => {
 					)}
 						</div>
 				</div>
-			) : null}
+			) : (
+			<>
+				<ChatRoom roomID={roomID} uid={uid}/>
+			</>	
+		)}
 		</>
 	)
 }
 
-export default RoomViewer
+export default RoomViewer;

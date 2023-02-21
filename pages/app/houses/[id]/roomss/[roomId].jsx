@@ -8,10 +8,50 @@ import RoomViewer from '../../../../../components/app/house/RoomViewer';
 
 const RoomPage = () => {
 	const router = useRouter()
-	const { id } = router.query
+	const { id, roomId } = router.query
 	const [house, setHouse] = useState()
 	const [userUID, setUserUID] = useState();
 	const [userData, setUserData] = useState()
+	const [size, setSize] = useState({ x: 10, contentsHidden: true });
+
+	const handler = (mouseDownEvent) => {
+		const startSize = size;
+		const startPosition = { x: mouseDownEvent.pageX };
+
+		function onMouseMove(mouseMoveEvent) {
+			let newSize;
+
+			newSize = startSize.x - startPosition.x + mouseMoveEvent.pageX
+
+			if (newSize > 30) {
+				setSize(currentSize => ({
+					x: newSize,
+					contentsHidden: false
+				}));
+				localStorage.setItem("HouseBarSize", JSON.stringify({ x: newSize, contentsHidden: false }));
+
+			} else {
+				setSize(currentSize => ({
+					x: newSize,
+					contentsHidden: true
+				}));
+				localStorage.setItem("HouseBarSize", JSON.stringify({ x: newSize, contentsHidden: true }));
+
+			}
+
+
+
+		}
+		function onMouseUp() {
+			document.body.removeEventListener("mousemove", onMouseMove);
+			// uncomment the following line if not using `{ once: true }`
+			// document.body.removeEventListener("mouseup", onMouseUp);
+		}
+
+		document.body.addEventListener("mousemove", onMouseMove);
+		document.body.addEventListener("mouseup", onMouseUp, { once: true });
+	};
+
 
 	useEffect(() => {
 		getUser().then((user) => {
@@ -35,29 +75,36 @@ const RoomPage = () => {
 			}
 
 		});
-	}, [setUserUID, setHouse, router, id])
+		if (localStorage.getItem("HouseBarSize")) {
+			setSize(JSON.parse(localStorage.getItem("HouseBarSize")))
+		}
+	}, [setUserUID, setHouse, router, id, setSize])
+
 
 
 
 	return (
-			<>
+		<>
 			<Head>
 				<title>House | Roomss</title>
 			</Head>
 			<div className="text-white">
 				{house && house.data.banner ? (
 					<div className={`fixed top-0 left-0 w-screen h-screen overflow-hidden animate-fadein -z-30 blur-md bg-cover bg-center`} >
-					<img src={house.data.banner} className="w-full"/>
+						<img src={house.data.banner} className="w-full object-cover h-full" />
 					</div>
 				) : ''}
 
 				<UserDropdown data={userData} uid={userUID} />
 				<div className="flex">
-					<div className="w-3/12 space-y-2 bg-dark-darker bg-opacity-25 h-screen overflow-auto" >
-						<RoomGrid data={userData} uid={userUID} houseID={id} />
+
+					<div style={{ width: size.x }} className="w-[10px] relative bg-dark-darker bg-opacity-50 h-screen">
+						<div onMouseDown={handler} className="bg-white rounded-full h-8 w-1 cursor-col-resize absolute left-[97%] top-[50%]" />
+						<RoomGrid contentsHidden={size.contentsHidden} data={userData} uid={userUID} houseID={id} />
 					</div>
-					<div className="w-9/12 bg-dark-darker bg-opacity-50 h-screen">
-						<RoomViewer isEmpty={true} />
+
+					<div className="w-full bg-dark-darker bg-opacity-40 h-screen">
+						<RoomViewer isEmpty={false} userData={userData} uid={userUID} roomID={roomId} />
 					</div>
 				</div>
 			</div>

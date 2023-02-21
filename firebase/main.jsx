@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, onSnapshot, updateDoc, doc, addDoc, collection, arrayUnion } from "firebase/firestore";
+import { getFirestore, onSnapshot, updateDoc, doc, addDoc, collection, arrayUnion, query, orderBy, limit, getDocs } from "firebase/firestore";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -26,6 +26,7 @@ let UploadFile;
 let Storage;
 let GetHouseInfo;
 let CreateRoom;
+let GetDocsWithQuery;
 
 if (typeof window !== "undefined") {
 
@@ -134,6 +135,18 @@ if (typeof window !== "undefined") {
 			})
 		})
 	}
+
+	GetDocsWithQuery = (thequery) => {
+		return new Promise(async(resolve, reject) => {
+			const querySnapshot = await getDocs(query(collection(Db, thequery.query), orderBy(thequery.orderBy, thequery.sort), limit(thequery.limit)));
+			let docs = []
+			querySnapshot.forEach((doc) => {
+				// doc.data() is never undefined for query doc snapshots
+				docs.push(doc.data())
+			});
+			resolve(docs)
+		})
+	}
 }
 
 
@@ -149,3 +162,4 @@ export const createHouse = CreateHouse;
 export const uploadFile = UploadFile;
 export const getHouseInfo = GetHouseInfo;
 export const createRoom = CreateRoom;
+export const getDocsWithQuery = GetDocsWithQuery;

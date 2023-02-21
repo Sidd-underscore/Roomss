@@ -17,7 +17,7 @@ return (
 					priority
 					className={`rounded-full`}
 				/>
-				<div className="hidden md:block md:space-y-2 text-left font-medium hidden md:block">
+				<div className="hidden lg:block lg:space-y-2 text-left font-medium">
 					<div className="w-24 truncate text-lg" title={data.name}>
 						{data.name}
 					</div>
@@ -36,7 +36,7 @@ return (
 					priority
 					className='animate-pulse rounded-full'
 				/>
-				<div className="hidden md:block space-y-2 text-left hidden md:block">
+				<div className="hidden lg:block lg:space-y-2 text-left">
 					<div className="w-24 truncate rounded-md animate-pulse h-6 bg-dark-lightest">
 					</div>
 					<div className="w-32 h-4 truncate rounded-md animate-pulse text-sm text-gray-400 bg-dark-lightest">
