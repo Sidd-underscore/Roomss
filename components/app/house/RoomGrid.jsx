@@ -15,7 +15,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import MainTransition from '../../transitions/MainTransition'
 
-const RoomGrid = ({ uid, houseID, data }) => {
+const RoomGrid = ({ uid, houseID, data, contentsHidden }) => {
 	const [loading, setLoading] = useState(true)
 	const [isRoomCreationLoading, setIsRoomCreationLoading] = useState(false)
 	const [hasRoomss, setHasRoomss] = useState(false)
@@ -27,6 +27,7 @@ const RoomGrid = ({ uid, houseID, data }) => {
 	const [roomss, setRoomss] = useState([])
 	const [houses, setHouses] = useState([])
 	const [houseInfo, setHouseInfo] = useState()
+
 	const roomTypes = [
 		{ id: 'RoomType/TextChat', name: 'Text Chat', description: 'Chat by typing', comingSoon: true, icon: 'chat-bubble-left-right' },
 		{ id: 'RoomType/VideoChat', name: 'Video Chat', description: 'See some other people\'s faces while talking', comingSoon: true, icon: 'camera' },
@@ -93,8 +94,7 @@ const RoomGrid = ({ uid, houseID, data }) => {
 
 	return (
 		<>
-
-			<div className="p-4 overflow-y-auto">
+			<div className={`p-4 overflow-y-auto ${contentsHidden && contentsHidden === true && "hidden"}`}>
 				<Menu as="div" className="w-full sticky top-4 z-50 ring-white ring-opacity-5 ring-1 relative cursor-pointer rounded-lg fixed transition backdrop-blur-md inline-block focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
 					<Menu.Button title="Switch House" className="justify-between w-full px-6 py-4 text-xl flex space-x-2 transition rounded-lg hover:bg-opacity-50 bg-black bg-opacity-25 items-center font-medium text-white vertical-middle focus:outline-none">
 						<div className="flex items-center">
@@ -132,90 +132,90 @@ const RoomGrid = ({ uid, houseID, data }) => {
 					</MainTransition>
 				</Menu>
 				<div className="my-8 h-1 rounded-full w-full bg-white bg-opacity-5" ></div>
-				<div className="mt-8">
-				{loading ? (
-					<div className="animate-pulse card-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8" >
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-						<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
-					</div >
-				) : (
-					<>
-						{hasRoomss ? (
-							<>
-								{
-									roomss.map((room, index) => (
-										<div className="transition ring-1 ring-white ring-opacity-5 hover:ring-opacity-25 mt-2 duration-200 ease cursor-pointer bg-opacity-25 hover:bg-opacity-50 hover:drop-shadow-lg select-none bg-black transition duration-200 ease text-left rounded-md" key={room.room.id} >
-											<Link href={`/app/houses/${houseID}/roomss/${room.room.id}`}>
-												<div className="flex space-x-2">
-													<div className="relative">
-														<Image alt="The room avatar" src={room.room.avatar} width={56} height={56} className="m-3 logo aspect-square rounded-[50%] bg-dark-darker bg-opacity-50" priority />
-														<div className="absolute bg-black transition bg-opacity-25 p-1.5 rounded-full bottom-0 left-10">
-															{room.room.type && room.room.type === 'RoomType/TextChat' && <SolidIcons icon={'chat-bubble-left-right'} className="h-5 w-5" />}
-															{room.room.type && room.room.type === 'RoomType/VideoChat' && <SolidIcons icon={'camera'} className="h-5 w-5" />}
-															{room.room.type && room.room.type === 'RoomType/Canvas' && <SolidIcons icon={'paint-brush'} className="h-5 w-5" />}
-															{room.room.type && room.room.type === 'RoomType/DocumentEditor' && <SolidIcons icon={'document-text'} className="h-5 w-5" />}
-															{room.room.type && room.room.type === 'RoomType/Calendar' && <SolidIcons icon={'document-text'} className="h-5 w-5" />}
-															{room.room.type && room.room.type === 'RoomType/FileStorage' && <SolidIcons icon={'circle-stack'} className="h-5 w-5" />}
+				<div className="mt-8 relative">
+					{loading ? (
+						<div className="animate-pulse card-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8" >
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+							<div className="transition mt-8 duration-200 ease cursor-default select-none bg-dark-lighter transition duration-200 ease text-left rounded-md" ><div alt="The room avatar" className="logo -mt-8 mb-1 left-4 top-0 h-36 w-36 relative aspect-square rounded-[50%] bg-dark-darker-low-opacity backdrop-blur-sm" ></div><div className="content p-4"><div className="text-xl mb-2 bg-dark-darker-low-opacity h-7 w-36 font-bold rounded-lg w-auto truncate"></div><div className="mt-2 text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-92 font-bold rounded-lg w-auto truncate"></div><div className="text-xl mb-2 bg-dark-darker-low-opacity h-6 w-72 font-bold rounded-lg w-auto truncate"></div></div></div>
+						</div >
+					) : (
+						<>
+							{hasRoomss ? (
+								<>
+									{
+										roomss.map((room, index) => (
+											<div className="transition p-1 mt-2 duration-200 ease cursor-pointer hover:drop-shadow-lg select-none duration-200 ease text-left text-white opacity-80 hover:opacity-100 rounded-md" key={room.room.id} >
+												<Link href={`/app/houses/${houseID}/roomss/${room.room.id}`}>
+													<div className="flex items-center space-x-2">
+														<div className="relative">
+															<Image alt="The room avatar" src={room.room.avatar} width={32} height={32} className="m-3 logo aspect-square rounded-[50%] bg-dark-darker bg-opacity-50" priority />
+															<div className="absolute bg-black transition bg-opacity-50 p-1.5 rounded-full bottom-0 left-8">
+																{room.room.type && room.room.type === 'RoomType/TextChat' && <SolidIcons icon={'chat-bubble-left-right'} className="h-3 w-3" />}
+																{room.room.type && room.room.type === 'RoomType/VideoChat' && <SolidIcons icon={'camera'} className="h-3 w-3" />}
+																{room.room.type && room.room.type === 'RoomType/Canvas' && <SolidIcons icon={'paint-brush'} className="h-3 w-3" />}
+																{room.room.type && room.room.type === 'RoomType/DocumentEditor' && <SolidIcons icon={'document-text'} className="h-3 w-3" />}
+																{room.room.type && room.room.type === 'RoomType/Calendar' && <SolidIcons icon={'document-text'} className="h-3 w-3" />}
+																{room.room.type && room.room.type === 'RoomType/FileStorage' && <SolidIcons icon={'circle-stack'} className="h-3 w-3" />}
+															</div>
+														</div>
+														<div className="content pl-0 p-3">
+															<div className="text-md font-bold rounded-lg w-auto truncate">
+																{room.room.name}
+															</div>
+															<div className="text-sm overflow-hidden text-elipsis line-clamp-1">{room.room.description}</div>
 														</div>
 													</div>
-													<div className="content pl-0 p-3 pb-3">
-														<div className="text-base mb-2 font-bold rounded-lg w-auto truncate">
-															{room.room.name}
-														</div>
-														<div className="text-sm">{room.room.description}</div>
-													</div>
-												</div>
-											</Link>
-										</div>
-									))
-								}
-								<div className="transition ring-1 ring-white ring-opacity-5 hover:ring-opacity-25 mt-8 duration-200 ease cursor-pointer bg-opacity-25 hover:bg-opacity-50 hover:drop-shadow-lg select-none bg-black transition duration-200 ease text-left rounded-md" onClick={() => setShowCreateRoomModal(true)}>
-									<div className="flex space-x-2">
-										<Icons icon="plus" className="m-3 h-14 w-14 logo aspect-square rounded-[50%]" />
+												</Link>
+											</div>
+										))
+									}
+									<button className="transition mt-8 w-full duration-200 ease cursor-pointer hover:drop-shadow-lg select-none opacity-80 hover:opacity-100 duration-200 ease text-left rounded-md" onClick={() => setShowCreateRoomModal(true)}>
+										<div className="flex items-center space-x-2">
+											<Icons icon="plus" className="m-3 h-8 w-8 logo aspect-square rounded-[50%]" />
 
-										<div className="content pl-0 flex items-center p-3 pb-3">
-											<div className="text-base mb-2 font-bold rounded-lg w-auto truncate">
-												Create another room?
+											<div className="content pl-0 p-3">
+												<div className="text-base font-bold rounded-lg w-auto truncate">
+													Create another room?
+												</div>
 											</div>
 										</div>
+									</button>
+
+
+								</>
+							) : (
+								<div className="flex text-center content-center justify-center">
+									<div>
+
+										<Illustrations className="w-full h-full drop-shadow-md" illustration="empty-bookshelf" />
+
+										<div className="mt-4 text-lg font-medium text-shadow-md ">
+											No Roomss :(
+										</div>
+										<div onClick={() => setShowCreateRoomModal(true)} className="text-shadow-md text-gray-200 text-md font-medium underline hover:no-underline cursor-pointer">
+											Create one?
+										</div>
 									</div>
 								</div>
 
+							)}
 
-							</>
-						) : (
-							<div className="flex text-center content-center justify-center">
-								<div>
+						</>
+					)}
 
-									<Illustrations className="w-full h-full drop-shadow-md" illustration="empty-bookshelf" />
-
-									<div className="mt-4 text-lg font-medium text-shadow-md ">
-										No Roomss :(
-									</div>
-									<div onClick={() => setShowCreateRoomModal(true)} className="text-shadow-md text-gray-200 text-md font-medium underline hover:no-underline cursor-pointer">
-										Create one?
-									</div>
-								</div>
-							</div>
-
-						)}
-
-					</>
-				)}
-
+				</div>
 			</div>
-		</div>
 			<Transition appear show={showCreateRoomModal} as={Fragment}>
 
 				<Dialog as="div" unmount={true} className="relative z-[100]" onClose={() => setShowCreateRoomModal(false)}>
