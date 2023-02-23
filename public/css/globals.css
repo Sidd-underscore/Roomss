@@ -130,3 +130,7 @@ em-emoji * {
 body .drop-shadow-md {
 	filter: drop-shadow(3px 3px 26px rgb(0 0 0 / 0.4));
 }
+
+img.loaded {
+  opacity: 1;
+}
