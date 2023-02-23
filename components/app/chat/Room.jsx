@@ -51,7 +51,7 @@ const ChatRoom = ({ uid, roomID }) => {
 					<div className="py-8 mb-4">
 						<div className="font-bold text-3xl text-center">
 							<p className="mb-1">Welcome to</p>
-							<p className="mb-3">this house</p>
+							<p className="mb-3">this room</p>
 						</div>
 						<p className="text-gray-300 text-center">
 							This is the beginning of this chat.

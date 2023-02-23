@@ -5,6 +5,7 @@ import UserDropdown from "../../../../../components/app/UserDropdown";
 import { app, getUser, getUserInfo, getHouseInfo } from "../../../../../firebase/main";
 import RoomGrid from '../../../../../components/app/house/RoomGrid'
 import RoomViewer from '../../../../../components/app/house/RoomViewer';
+import ReactImageFadeIn from 'react-image-fade-in';
 
 const RoomPage = () => {
 	const router = useRouter()
@@ -90,9 +91,13 @@ const RoomPage = () => {
 			</Head>
 			<div className="text-white">
 				{house && house.data.banner ? (
-					<div className={`fixed top-0 left-0 w-screen h-screen overflow-hidden animate-fadein -z-30 blur-md bg-cover bg-center`} >
-						<img src={house.data.banner} className="w-full object-cover h-full" />
-					</div>
+					<div className={`fixed top-0 left-0 w-screen h-screen overflow-hidden -z-30 blur-md bg-cover bg-center`} >
+
+
+							<ReactImageFadeIn duration={1000} src={house.data.banner} className={`w-full object-cover -z-30 h-full`} />
+
+
+																</div>
 				) : ''}
 
 				<UserDropdown data={userData} uid={userUID} />

@@ -5,6 +5,7 @@ import UserDropdown from "../../../components/app/UserDropdown";
 import { app, getUser, getUserInfo, getHouseInfo } from "../../../firebase/main";
 import RoomGrid from '../../../components/app/house/RoomGrid'
 import RoomViewer from '../../../components/app/house/RoomViewer';
+import ReactImageFadeIn from 'react-image-fade-in';
 
 const RoomPage = () => {
 	const router = useRouter()
@@ -13,6 +14,11 @@ const RoomPage = () => {
 	const [userUID, setUserUID] = useState();
 	const [userData, setUserData] = useState()
 	const [size, setSize] = useState({ x: 300 });
+	const [isImageLoaded, setIsImageLoaded] = useState(false)
+
+	const handleImageLoad = () => {
+		setIsImageLoaded(true)
+	}
 
 	const handler = (mouseDownEvent) => {
 		const startSize = size;
@@ -74,7 +80,6 @@ const RoomPage = () => {
 	}, [setUserUID, setHouse, router, id, setSize])
 
 
-
 	return (
 		<>
 			<Head>
@@ -82,16 +87,20 @@ const RoomPage = () => {
 			</Head>
 			<div className="text-white">
 				{house && house.data.banner ? (
-					<div className={`fixed top-0 left-0 w-screen h-screen overflow-hidden animate-fadein -z-30 blur-md bg-cover bg-center`} >
-						<img src={house.data.banner} className="w-full object-cover h-full" />
-					</div>
+									<div className={`fixed top-0 left-0 w-screen h-screen overflow-hidden -z-30 blur-md bg-cover bg-center`} >
+
+
+							<ReactImageFadeIn duration={1000} src={house.data.banner} className={`w-full object-cover -z-30 h-full`} />
+
+
+																</div>
 				) : ''}
 
 				<UserDropdown data={userData} uid={userUID} />
 				<div className="flex">
 
 					<div style={{ width: size.x }} className="w-3/12 min-w-[300px] relative bg-dark-darker bg-opacity-50 h-screen">
-						<div onMouseDown={handler} className="bg-white rounded-full h-8 w-1 cursor-col-resize absolute left-[97%] top-[50%]" />
+						<div onMouseDown={handler} className="z-10 bg-white rounded-full h-8 w-1 cursor-col-resize absolute left-[97%] top-[50%]" />
 						<RoomGrid data={userData} uid={userUID} houseID={id} />
 					</div>
 
