@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import Head from "next/head";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import UserDropdown from "../../../components/app/UserDropdown";
 import { app, getUser, getUserInfo, getHouseInfo } from "../../../firebase/main";
 import RoomGrid from '../../../components/app/house/RoomGrid'
@@ -13,42 +13,40 @@ const RoomPage = () => {
 	const [house, setHouse] = useState()
 	const [userUID, setUserUID] = useState();
 	const [userData, setUserData] = useState()
-	const [size, setSize] = useState({ x: 300 });
-	const [isImageLoaded, setIsImageLoaded] = useState(false)
+	const sidebarRef = useRef(null);
+	const [isResizing, setIsResizing] = useState(false);
+	const [sidebarWidth, setSidebarWidth] = useState();
+	const [hasLocalStoraged, setHasLocalStoraged] = useState(false)
 
-	const handleImageLoad = () => {
-		setIsImageLoaded(true)
-	}
+	const startResizing = useCallback(() => {
+		setIsResizing(true);
+	}, []);
 
-	const handler = (mouseDownEvent) => {
-		const startSize = size;
-		const startPosition = { x: mouseDownEvent.pageX };
+	const stopResizing = useCallback(() => {
+		setIsResizing(false);
+	}, []);
 
-		function onMouseMove(mouseMoveEvent) {
-			let newSize;
-			if (startSize.x - startPosition.x + mouseMoveEvent.pageX < 300) {
-				newSize = 300
-			} else {
-				newSize = startSize.x - startPosition.x + mouseMoveEvent.pageX
+	const resize = useCallback(
+		(mouseMoveEvent) => {
+			if (isResizing) {
+				setSidebarWidth(
+					mouseMoveEvent.clientX -
+					sidebarRef.current.getBoundingClientRect().left
+				);
+				if (localStorage) localStorage.setItem('HouseBarSize', mouseMoveEvent.clientX - sidebarRef.current.getBoundingClientRect().left)
 			}
-			setSize(currentSize => ({
-				x: newSize,
-			}));
+		},
+		[isResizing]
+	);
 
-
-			localStorage.setItem("HouseBarSize", JSON.stringify({ x: newSize }));
-
-
-		}
-		function onMouseUp() {
-			document.body.removeEventListener("mousemove", onMouseMove);
-			// uncomment the following line if not using `{ once: true }`
-			// document.body.removeEventListener("mouseup", onMouseUp);
-		}
-
-		document.body.addEventListener("mousemove", onMouseMove);
-		document.body.addEventListener("mouseup", onMouseUp, { once: true });
-	};
+	useEffect(() => {
+		window.addEventListener("mousemove", resize);
+		window.addEventListener("mouseup", stopResizing);
+		return () => {
+			window.removeEventListener("mousemove", resize);
+			window.removeEventListener("mouseup", stopResizing);
+		};
+	}, [resize, stopResizing]);
 
 
 	useEffect(() => {
@@ -74,10 +72,18 @@ const RoomPage = () => {
 
 		});
 
-		if (localStorage.getItem("HouseBarSize")) {
-			setSize(JSON.parse(localStorage.getItem("HouseBarSize")))
+
+	}, [setUserUID, setHouse, router, id])
+
+	useEffect(() => {
+		if (localStorage.getItem('HouseBarSize') && hasLocalStoraged != true) {
+			setHasLocalStoraged(true)
+			setSidebarWidth(localStorage.getItem('HouseBarSize'))
+
+		} else {
+			setSidebarWidth(300)
 		}
-	}, [setUserUID, setHouse, router, id, setSize])
+	}, [setHasLocalStoraged, hasLocalStoraged, setSidebarWidth])
 
 
 	return (
@@ -85,23 +91,34 @@ const RoomPage = () => {
 			<Head>
 				<title>House | Roomss</title>
 			</Head>
-			<div className="text-white">
+			<div className={`text-white ${isResizing ? 'cursor-col-resize' : ''}`}>
 				{house && house.data.banner ? (
-									<div className={`fixed top-0 left-0 w-screen h-screen overflow-hidden -z-30 blur-md bg-cover bg-center`} >
-
-
-							<ReactImageFadeIn duration={1000} src={house.data.banner} className={`w-full object-cover -z-30 h-full`} />
-
-
-																</div>
+					<div className={`fixed top-0 left-0 w-screen h-screen overflow-hidden -z-30 blur-md bg-cover bg-center`} >
+						<ReactImageFadeIn duration={1000} src={house.data.banner} className={`w-full object-cover -z-30 h-full`} />
+					</div>
 				) : ''}
 
 				<UserDropdown data={userData} uid={userUID} />
 				<div className="flex">
 
-					<div style={{ width: size.x }} className="w-3/12 min-w-[300px] relative bg-dark-darker bg-opacity-50 h-screen">
-						<div onMouseDown={handler} className="z-10 bg-white rounded-full h-8 w-1 cursor-col-resize absolute left-[97%] top-[50%]" />
+
+					<div
+						ref={sidebarRef}
+						className="w-3/12 min-w-[300px] max-w-[450px] relative bg-dark-darker bg-opacity-50 h-screen flex-grow-0 flex-shrink-0 flex flex-row z-30"
+						style={{ width: sidebarWidth }}
+						onMouseDown={(e) => e.preventDefault()}
+					>
 						<RoomGrid data={userData} uid={userUID} houseID={id} />
+						<div
+							tabIndex="1"
+							className={`user-select-none grow-0 shrink-0 h-4 bg-white relative ${isResizing ? 'top-0 h-full' : 'top-[50%] rounded-full'} transition-all duration-300 bg-opacity-50 justify-self-[flex-end] cursor-col-resize resize-horizontal w-[4px]`}
+							onMouseDown={startResizing}
+							onMouseUp={stopResizing}
+							onMouseMove={resize}
+							onTouchStart={startResizing}
+							onTouchEnd={stopResizing}
+							onTouchMove={resize}
+						/>
 					</div>
 
 					<div className="w-full bg-dark-darker bg-opacity-40 h-screen">

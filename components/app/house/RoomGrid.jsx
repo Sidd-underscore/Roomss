@@ -48,10 +48,11 @@ const RoomGrid = ({ uid, houseID, data, contentsHidden }) => {
 					.replace(/\s+/g, '')
 					.includes(query.toLowerCase().replace(/\s+/g, ''))
 			)
-	var theyHouses = [];
+		let theyRoomss = []
+		let theyHouses = []
 
 	useEffect(() => {
-		var theyRoomss = [];
+		theyRoomss = [];
 		if (uid && uid != '' && houseID) {
 			getHouseInfo(houseID, uid).then((doc) => {
 				if (doc.data()) {
@@ -70,16 +71,17 @@ const RoomGrid = ({ uid, houseID, data, contentsHidden }) => {
 				}
 			});
 		}
+		theyHouses = []
 		if (data) {
 			data.housesJoined.forEach((house) => {
 				getHouseInfo(house, uid).then((thehousedata) => {
 					theyHouses.push({ data: thehousedata.data().data, id: house })
 					setHouses(theyHouses)
-				})
+				});
 			})
 		}
 
-	}, [uid, houseID, data, setHouses, theyHouses]);
+	}, [uid, houseID, data, setHouses, theyRoomss, theyHouses]);
 
 
 	const makeTheRoom = () => {
@@ -94,7 +96,7 @@ const RoomGrid = ({ uid, houseID, data, contentsHidden }) => {
 
 	return (
 		<>
-			<div className={`p-4 overflow-y-auto ${contentsHidden && contentsHidden === true && "hidden"}`}>
+			<div className={`p-4 overflow-y-auto flex-1 ${contentsHidden && contentsHidden === true && "hidden"}`}>
 				<Menu as="div" className="w-full sticky top-4 z-50 ring-white ring-opacity-5 ring-1 relative cursor-pointer rounded-lg fixed transition backdrop-blur-md inline-block focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
 					<Menu.Button title="Switch House" className="justify-between w-full px-6 py-4 text-xl flex space-x-2 transition rounded-lg hover:bg-opacity-50 bg-black bg-opacity-25 items-center font-medium text-white vertical-middle focus:outline-none">
 						<div className="flex items-center">
@@ -108,23 +110,19 @@ const RoomGrid = ({ uid, houseID, data, contentsHidden }) => {
 						as={Fragment}
 					>
 						<Menu.Items className="absolute text-white right-0 mt-2 w-full origin-top-right z-[500] rounded-lg bg-black transition ring-white ring-opacity-5 shadow-lg ring-1 focus:outline-none">
-							{houses.map((house, index) => (
-								<>
-									{house.id === houseID ? null : (
+							{houses && houses.map((house, index) => (
+								<Menu.Item as="div" key={JSON.stringify(house)}>
 
-										<Menu.Item key={JSON.stringify(house)}>
-											<Link
-												href={"/app/houses/" + house.id}
-												className={`transition ease-in-out duration-300 flex text-white hover:text-opacity-100 text-opacity-75 hover:font-medium w-full items-center p-3 text-sm`}
-											>
-												<Image src={house.data.avatar} height={16} width={16} alt="The current houses's avatar" className="rounded-full aspect-square mr-2" priority />
-												{house.data.name}
+										<Link
+											href={"/app/houses/" + house.id}
+											className={`transition ease-in-out duration-300 flex text-white hover:text-opacity-100 text-opacity-75 hover:font-medium w-full items-center p-3 text-sm`}
+										>
+											<Image src={house.data.avatar} height={16} width={16} alt="The current houses's avatar" className="rounded-full aspect-square mr-2" priority />
+											{house.data.name}
 
-											</Link>
-										</Menu.Item>
-									)}
+										</Link>
 
-								</>
+								</Menu.Item>
 							))}
 
 
@@ -155,7 +153,7 @@ const RoomGrid = ({ uid, houseID, data, contentsHidden }) => {
 								<>
 									{
 										roomss.map((room, index) => (
-											<div className="transition p-1 mt-2 duration-200 ease cursor-pointer hover:drop-shadow-lg select-none duration-200 ease text-left text-white opacity-80 hover:opacity-100 rounded-md" key={room.room.id} >
+											<div className="select-none transition p-1 mt-2 duration-200 ease cursor-pointer hover:drop-shadow-lg select-none duration-200 ease text-left text-white opacity-80 hover:opacity-100 rounded-md" key={room.room.id} >
 												<Link href={`/app/houses/${houseID}/roomss/${room.room.id}`}>
 													<div className="flex items-center space-x-2">
 														<div className="relative">
