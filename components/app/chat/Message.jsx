@@ -1,5 +1,6 @@
 import React from 'react';
 import { formatRelative } from 'date-fns';
+import Image from 'next/image'
 
 const formatDate = date => {
   let formattedDate = '';
@@ -24,9 +25,9 @@ const Message = ({
   return (
     <div className="px-4 py-4 rounded-md hover:bg-gray-50 dark:hover:bg-coolDark-600 overflow-hidden flex items-start">
       {photoURL ? (
-        <img
+        <Image
           src={photoURL}
-          alt="Avatar"
+          alt="User Avatar"
           className="rounded-full mr-4"
           width={45}
           height={45}

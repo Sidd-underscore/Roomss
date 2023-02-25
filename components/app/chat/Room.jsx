@@ -57,7 +57,7 @@ const ChatRoom = ({ uid, roomID }) => {
 							This is the beginning of this chat.
 						</p>
 					</div>
-					<hr className="border-none m-2 h-0.5 bg-gray-300 rounded-full"/>
+					<hr className="border-none m-2 h-1 bg-gray-300 rounded-full"/>
 					<ul>
 						{messages ? messages.map(message => (
 							<li key={message.id}>
